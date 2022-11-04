@@ -10,4 +10,3 @@ export class AppComponent {
   products = ProductsArray(20);
   title = 'WorkingWithAngular';
 }
-
