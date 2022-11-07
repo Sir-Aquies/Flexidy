@@ -1,5 +1,35 @@
-.nav-bar {
-    width: 100%;
-    height: fit-content;
-    padding: 0.5rem;
+.top-bar {
+  width: 100%;
+  height: max-content;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  z-index: 5;
+  border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+
+nav {
+  height: fit-content;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+}
+
+.logo {
+  width: fit-content;
+  padding-left: 0.5rem;
+  font-size: 28px;
+}
+
+.link-list {
+  display: flex;
+  margin-left: 1rem;
+  align-items: center;
+  justify-content: start;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }

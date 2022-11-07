@@ -1,33 +1,9 @@
+<app-top-bar></app-top-bar>
+
 <div class="container">
-	<app-top-bar></app-top-bar>
-	<div *ngFor="let product of products">
-		<div class="product-container">
-			<div product-image><img *ngIf="product.image" src="{{ product.image }}" /></div>
-			<div class="product-info">
-				<p class="product-name">{{ product.name }}</p>
-				<p>{{ product.author }}</p>
-				<div class="price-container"><span class="price-tag">$</span><span class="price">{{ product.price }}</span></div>
-
-				<button type="button" class="buy-button cart">Add to cart</button>
-				<button type="button" class="buy-button">Buy now</button>
-			</div>
-		</div>
-	</div>
+  <router-outlet></router-outlet>
 </div>
+  
 
-<!--<div class="container">
-	<h1 style="text-align: center;">Products</h1>
-	<div *ngFor="let product of products">
-		<div class="product-container">
-			<div class="product-info">
-				<p class="product-name">{{ product.name }}</p>
-				<p>{{ product.author }}</p>
-				<div><span class="price-tag">$</span><span class="price">{{ product.price }}</span></div>
-			</div>
 
-			<img *ngIf="product.image" src="{{ product.image }}" />
-			<button type="button" class="buy-button cart">Add to cart</button>
-			<button type="button" class="buy-button">Buy now</button>
-		</div>
-	</div>
-</div>-->
+

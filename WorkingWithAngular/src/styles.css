@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  overflow-x: hidden;
+  margin: 0;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  min-width: fit-content;
+  height: 100%;
+  max-width: 80rem;
+  font-size: 18px;
+  margin: 0 auto;
+}
