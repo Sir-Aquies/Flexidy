@@ -12,11 +12,12 @@ html {
   box-sizing: border-box;
 }
 
-.container {
+.main-container {
   width: 100%;
   min-width: fit-content;
   height: 100%;
   max-width: 80rem;
   font-size: 18px;
   margin: 0 auto;
+  padding-top: 4rem;
 }

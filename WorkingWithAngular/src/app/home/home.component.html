@@ -1,37 +1,150 @@
-<div class="home-background"></div>
+<div class="search-bar-container">
+  <div class="search-bar-text">Etiam hendrerit </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search image" />
+  </div>
+</div>
 
-<div class="home-container">
-  <h1 style="text-align:center">Lorem Ipsum</h1>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin molestie leo ac metus bibendum, a laoreet lorem tempor.
-    Morbi et porttitor eros. Nunc lacinia maximus tempus. Aliquam sagittis tellus vitae scelerisque convallis.
-    In ullamcorper eros id purus tempor ullamcorper. Duis nec pharetra sapien, ac ullamcorper dolor. Vivamus sagittis auctor rhoncus.
-    Nunc quis accumsan ligula. Nulla facilisi. Suspendisse potenti. Aenean quis nunc enim. Vestibulum pretium augue vel bibendum aliquet.
-    Quisque mattis imperdiet mauris nec dapibus. Morbi aliquam venenatis orci non dictum. Curabitur efficitur lectus sit amet mi consectetur euismod.
-    Pellentesque ut mauris ac erat viverra fermentum vitae at erat. Nam ac auctor sem. Curabitur turpis justo, placerat ac leo a, accumsan mattis justo.
-  </p>
-  <img src="https://picsum.photos/300/200" alt="lorem picsum image" class="inline-pic" />
-  <p>
-    Nunc quis accumsan ligula. Nulla facilisi. Suspendisse potenti. Aenean quis nunc enim. Vestibulum pretium augue vel bibendum aliquet.
-    Quisque mattis imperdiet mauris nec dapibus. Morbi aliquam venenatis orci non dictum. Curabitur efficitur lectus sit amet mi consectetur euismod.
-    Pellentesque ut mauris ac erat viverra fermentum vitae at erat. Nam ac auctor sem. Curabitur turpis justo, placerat ac leo a, accumsan mattis justo.
-  </p>
+<div class="band-image">
+  <div class="band-content">
+    <div style="font-size: 3rem;">Ut lorem libero, dictum ut odio vel</div>
+    <ul>
+      <li>Morbi scelerisque suscipit sem quis finibus</li>
+      <li>Cras fermentum, ipsum non vestibulum iaculis, dui diam bibendum tortor</li>
+      <li>Pellentesque malesuada tincidunt aliquam</li>
+      <li>Aenean commodo quis lacus iaculis faucibus</li>
+      <li>Cras tincidunt vel ante eget ornare</li>
+      <li>Phasellus dolor justo, laoreet in dolor id, auctor semper neque.</li>
+    </ul>
+  </div>
 </div>
 
 <div class="home-container">
-  <h1 style="text-align:center">Lorem Ipsum</h1>
+  <h3 style="text-align:center">Lorem Ipsum</h3>
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin molestie leo ac metus bibendum, a laoreet lorem tempor.
     Morbi et porttitor eros. Nunc lacinia maximus tempus. Aliquam sagittis tellus vitae scelerisque convallis.
-    In ullamcorper eros id purus tempor ullamcorper. Duis nec pharetra sapien, ac ullamcorper dolor. Vivamus sagittis auctor rhoncus.
-    Nunc quis accumsan ligula. Nulla facilisi. Suspendisse potenti. Aenean quis nunc enim. Vestibulum pretium augue vel bibendum aliquet.
-    Quisque mattis imperdiet mauris nec dapibus. Morbi aliquam venenatis orci non dictum. Curabitur efficitur lectus sit amet mi consectetur euismod.
-    Pellentesque ut mauris ac erat viverra fermentum vitae at erat. Nam ac auctor sem. Curabitur turpis justo, placerat ac leo a, accumsan mattis justo.
   </p>
-  <img src="https://picsum.photos/300/200" alt="lorem picsum image" class="inline-pic" />
-  <span>
-    Nunc quis accumsan ligula. Nulla facilisi. Suspendisse potenti. Aenean quis nunc enim. Vestibulum pretium augue vel bibendum aliquet.
-    Quisque mattis imperdiet mauris nec dapibus. Morbi aliquam venenatis orci non dictum. Curabitur efficitur lectus sit amet mi consectetur euismod.
-    Pellentesque ut mauris ac erat viverra fermentum vitae at erat. Nam ac auctor sem. Curabitur turpis justo, placerat ac leo a, accumsan mattis justo.
-  </span>
+
+  <div class="section">
+    <img src="https://picsum.photos/300" alt="lorem picsum image" class="inline-pic" />
+
+    <p>
+      Nunc quis accumsan ligula. Nulla facilisi. Suspendisse potenti. Aenean quis nunc enim. Vestibulum pretium augue vel bibendum aliquet.
+      Quisque mattis imperdiet mauris nec dapibus. Morbi aliquam venenatis orci non dictum. Curabitur efficitur lectus sit amet mi consectetur euismod.
+    </p>
+  </div>
+
+  <h3 style="text-align:center">Etiam porttitor</h3>
+
+  <p>
+    Cras tempor pellentesque risus. Sed dapibus velit diam, id tincidunt purus ullamcorper eget.
+  </p>
+
+  <div class="image-container">
+    <div class="image-frame">
+      <img src="https://picsum.photos/300/200?random&secId=25" alt="lorem picsum image" />
+      <div>Praesent porta</div>
+    </div>
+    <div class="image-frame">
+      <img src="https://picsum.photos/300/200?random&secId=22" alt="lorem picsum image" />
+      <div>Pellentesque</div>
+    </div>
+    <div class="image-frame">
+      <img src="https://picsum.photos/300/200?random&secId=21" alt="lorem picsum image" />
+      <div>Sed dapibus</div>
+    </div>
+  </div>
+
+  <p>
+    Curabitur efficitur lectus sit amet mi consectetur euismod.
+    Pellentesque ut mauris ac erat viverra fermentum vitae at erat. Nam ac auctor sem.
+  </p>
+
+  <div class="product-collection">
+    <div class="product-frame">
+      <div class="product-showcase" *ngFor="let product of products">
+        <img [src]="product.image" alt="lorem picsum image" />
+        <p>{{ product.name }}</p>
+      </div>
+    </div>
+  </div>
 </div>
+
+<footer role="contentinfo">
+  <div class="footer-container">
+    <div class="footer-upper">
+      <p>Cras nisi mauris, elementum at ultricies ac, egestas vel nulla. Duis accumsan eget arcu vel molestie.</p>
+      <input type="email" placeholder="email" class="input-email"/>
+    </div>
+
+    <div class="footer-mid">
+      <div class="footer-column">
+        <div>Maecenas</div>
+        <a href="#">Ultricies</a>
+        <a href="#">Phasellus</a>
+        <a href="#">Suspendisse</a>
+        <a href="#">Nulla</a>
+        <a href="#">Phasellus montes</a>
+        <a href="#">Aenean</a>
+        <a href="#">Laoreet</a>
+        <a href="#">Placerat</a>
+      </div>
+
+      <div class="footer-column">
+        <div>Lorem tellus</div>
+        <a href="#">Praesent varius</a>
+        <a href="#">Vehicula</a>
+        <a href="#">Elementum posuere</a>
+        <a href="#">Integer purus</a>
+
+        <div>Penatibus ligula</div>
+        <a href="#">Vestibulum arcu</a>
+        <a href="#">Tincidunt amet</a>
+      </div>
+
+      <div class="footer-column">
+        <div>Consectetur id hendrerit</div>
+        <a href="#">Risus dis parturient</a>
+        <a href="#">Efficitur </a>
+        <a href="#">Egestas ac orci</a>
+        <a href="#">Proin sed</a>
+        <a href="#">Tempus</a>
+        <a href="#">Ornare dolor</a>
+        <a href="#">Eleifend convallis</a>
+      </div>
+
+      <div class="footer-column">
+        <div>Sollicitudin</div>
+        <a href="#">Nullam congue</a>
+        <a href="#">Tempus</a>
+        <a href="#">Rutrum dictum ex</a>
+        <a href="#">Morbi</a>
+
+        <div>Dolorem dis parturient</div>
+        <a href="#">Vivamus donec</a>
+        <a href="#">Pulvinar</a>
+        <a href="#">Faucibus sapien iaculis</a>
+      </div>
+
+      <div class="footer-column">
+        <div>Maximus pretium</div>
+        <a href="#">Nascetur faucibus</a>
+        <a href="#">Imperdiet elit</a>
+        <a href="#">Posuere magna</a>
+        <a href="#">Tristique</a>
+        <a href="#">Viverra vel erat</a>
+
+        <div>Mauris tortor</div>
+        <a href="#">Dictum nec rhoncus</a>
+        <a href="#">Bibendum aliquam</a>
+      </div>
+    </div>
+
+    <hr style="border-top: 1px solid rgba(255,255,255,0.5); margin: 2rem 0;" />
+
+    <div class="footer-lower">
+      <p>© 2003-2022 Flexidy, Inc.</p>
+    </div>
+  </div>
+</footer>

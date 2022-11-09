@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductsArray } from '../Products';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  products = ProductsArray(6);
 
   constructor() { }
 

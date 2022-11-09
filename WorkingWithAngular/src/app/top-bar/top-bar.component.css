@@ -5,7 +5,7 @@
   top: 0;
   background-color: white;
   z-index: 5;
-  border-bottom: 1px solid rgba(0,0,0,0.4);
+  border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 
 nav {
@@ -19,7 +19,7 @@ nav {
 .logo {
   width: fit-content;
   padding-left: 0.5rem;
-  font-size: 28px;
+  font-size: 36px;
 }
 
 .link-list {
