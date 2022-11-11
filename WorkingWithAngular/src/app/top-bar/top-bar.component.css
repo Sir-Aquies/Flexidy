@@ -1,19 +1,20 @@
 .top-bar {
   width: 100%;
-  height: max-content;
   position: fixed;
   top: 0;
-  background-color: white;
+  background-color: black;
   z-index: 5;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
+  border-bottom: 1px solid rgba(0,0,0,0.9);
 }
 
 nav {
   height: fit-content;
   padding: 0.5rem;
+  color: white;
   display: flex;
   align-items: center;
-  font-size: 22px;
+  font-size: 24px;
 }
 
 .logo {
@@ -31,5 +32,5 @@ nav {
 
 a {
   text-decoration: none;
-  color: black;
+  color: white;
 }
