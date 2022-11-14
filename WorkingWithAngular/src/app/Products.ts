@@ -6,7 +6,7 @@ export interface Product {
   image?: string,
   stringPrice?: string
 }
-
+//TODO - change this to a service.
 export function ProductsArray(amount: number): Product[] {
   const products: Product[] = [];
 
@@ -21,7 +21,17 @@ export function ProductsArray(amount: number): Product[] {
           price: Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100
         };
 
-        product.image = `https://picsum.photos/400/300?random&secId=${crypto.randomUUID()})`;
+        //product.image = `https://picsum.photos/400/300?random&secId=${crypto.randomUUID()})`;
+        //product.image = `https://picsum.photos/id/${Math.floor(Math.random() * 1085)}/400/300`;
+
+        getPicsum(Math.floor(Math.random() * 1085), function (error: XMLHttpRequest, data: any) {
+          if (error === null) {
+            product.image = data;
+          }
+        })
+
+        //TODO - try this.
+        //product.image = `https://thispersondoesnotexist.com/`;
 
         getJSON("https://random-data-api.com/api/users/random_user", function (error: XMLHttpRequest, xhttp: any) {
           if (error === null) {
@@ -32,7 +42,7 @@ export function ProductsArray(amount: number): Product[] {
         product.stringPrice = product.price.toFixed(2);
 
         products.push(product);
-}
+      }
       else {
         amount++;
       }
@@ -41,6 +51,21 @@ export function ProductsArray(amount: number): Product[] {
   }
 
   return products;
+}
+
+function getPicsum(id: number, callback: Function) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', `https://picsum.photos/id/${id}/400/300`, true);
+
+  xhr.onload = function () {
+    var status = xhr.status;
+    if (status === 200) {
+      callback(null, xhr.responseURL);
+    } else {
+      callback(status, xhr.responseURL);
+    }
+  };
+  xhr.send();
 }
 
 function getJSON(url: string, callback: Function) {

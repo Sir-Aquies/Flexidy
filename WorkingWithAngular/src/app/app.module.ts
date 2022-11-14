@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { HomeComponent } from './home/home.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,14 @@ import { HomeComponent } from './home/home.component';
     TopBarComponent,
     ProductsListComponent,
     HomeComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, AppRoutingModule,
     RouterModule.forRoot([
       { path: "", component: HomeComponent },
-      { path: "products", component: ProductsListComponent }
+      { path: "products", component: ProductsListComponent },
+      { path: "cart", component: CartComponent }
     ])
   ],
   providers: [],

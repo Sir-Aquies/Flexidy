@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsArray } from '../Products';
+import { ProductsArray, Product } from '../Products';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-products-list',
@@ -8,9 +9,22 @@ import { ProductsArray } from '../Products';
 })
 export class ProductsListComponent implements OnInit {
   products = ProductsArray(20);
+  //TODO -  add pagination.
+  constructor(private cart: CartService) { }
 
-  constructor() { }
+  ngOnInit(): void { }
 
-  ngOnInit(): void {}
+  addToCart(product: Product) {
+    let add = true;
+    this.cart.items.forEach(function (value) {
+      if (value.uid === product.uid) {
+        add = false;
+      }
+    });
+
+    if (add) {
+      this.cart.addItem(product);
+    }
+  }
 
 }

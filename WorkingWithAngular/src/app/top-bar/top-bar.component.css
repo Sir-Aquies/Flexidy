@@ -25,12 +25,38 @@ nav {
 
 .link-list {
   display: flex;
-  margin-left: 1rem;
+  padding: 0 1.3rem;
   align-items: center;
   justify-content: start;
+  width: 100%;
 }
 
 a {
   text-decoration: none;
   color: white;
+}
+
+.shopping-cart {
+  display: flex;
+  margin-left: auto;
+  position: relative;
+  align-items: center;
+  border: 1px solid red;
+}
+
+.shopping-cart > img {
+  width: 55px;
+  height: auto;
+  left: 0;
+  top:0;
+}
+
+.items-amount {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-16%, -80%);
+  background-color: black;
+  line-height: 0.7;
+  font-size: 30px;
 }
