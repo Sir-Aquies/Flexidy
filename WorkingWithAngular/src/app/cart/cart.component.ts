@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
-import { ProductsArray, Product } from '../Products';
+import { ProductsService, Product } from '../products.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,14 +11,14 @@ export class CartComponent implements OnInit {
 
   items = this.cart.getItems();
 
-  constructor(private cart: CartService) { }
+  //TODO - show more items with ProductArray.
+
+  constructor(private cart: CartService, private products: ProductsService) { }
 
   ngOnInit(): void {
   }
 
   removeFromCart(product: Product) {
-    let index = this.items.indexOf(product);
-    this.items.splice(index, 1);
+    this.cart.removeItem(product);
   }
-
 }

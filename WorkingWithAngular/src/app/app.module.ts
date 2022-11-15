@@ -9,6 +9,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
+import { SingularProductComponent } from './singular-product/singular-product.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CartComponent } from './cart/cart.component';
     ProductsListComponent,
     HomeComponent,
     CartComponent,
+    SingularProductComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, AppRoutingModule,

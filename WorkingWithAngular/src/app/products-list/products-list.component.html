@@ -1,22 +1,5 @@
-
 <h1>Products</h1>
 
 <div *ngFor="let product of products">
-  <div class="product-container" *ngIf="product.image">
-    <div product-image><img src="{{ product.image }}" /></div>
-    <div class="product-info">
-      <p class="product-name">{{ product.name }}</p>
-      <p>by {{ product.author }}</p>
-
-      <div class="price-container">
-        <span class="other">$</span>
-        <span class="price" *ngIf="product.stringPrice !== undefined">{{ product.stringPrice.split(".")[0] }}</span>
-        <span class="other" *ngIf="product.stringPrice !== undefined">{{ product.stringPrice.split(".")[1] }}</span>
-      </div>
-
-      <button type="button" class="buy-button cart" (click)="addToCart(product)">Add to cart</button>
-      <button type="button" class="buy-button">Buy now</button>
-    </div>
-  </div>
+  <app-singular-product [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
 </div>
-

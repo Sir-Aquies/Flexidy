@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsArray, Product } from '../Products';
 import { CartService } from '../cart.service';
+import { ProductsService, Product } from '../products.service';
 
 @Component({
   selector: 'app-products-list',
@@ -8,11 +8,15 @@ import { CartService } from '../cart.service';
   styleUrls: ['./products-list.component.css']
 })
 export class ProductsListComponent implements OnInit {
-  products = ProductsArray(20);
+  //products = ProductsArray(20);
   //TODO -  add pagination.
-  constructor(private cart: CartService) { }
 
-  ngOnInit(): void { }
+  products = this.productsServ.products;
+
+  constructor(public cart: CartService, private productsServ: ProductsService) {}
+
+  ngOnInit(): void {
+  }
 
   addToCart(product: Product) {
     let add = true;
@@ -25,6 +29,10 @@ export class ProductsListComponent implements OnInit {
     if (add) {
       this.cart.addItem(product);
     }
+  }
+
+  removeFromCart(product: Product) {
+    this.cart.removeItem(product);
   }
 
 }

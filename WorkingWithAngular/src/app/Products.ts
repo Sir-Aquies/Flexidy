@@ -6,7 +6,7 @@ export interface Product {
   image?: string,
   stringPrice?: string
 }
-//TODO - change this to a service.
+
 export function ProductsArray(amount: number): Product[] {
   const products: Product[] = [];
 
