@@ -45,7 +45,6 @@ export class ProductsService {
         });
 
         output.push(product);
-
       });
 
       amount--;
@@ -76,7 +75,6 @@ export class ProductsService {
         });
 
         this.products.push(product);
-
       });
 
       amount--;

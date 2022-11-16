@@ -8,7 +8,6 @@ import { ProductsService, Product } from '../products.service';
   styleUrls: ['./products-list.component.css']
 })
 export class ProductsListComponent implements OnInit {
-  //products = ProductsArray(20);
   //TODO -  add pagination.
 
   products = this.productsServ.products;

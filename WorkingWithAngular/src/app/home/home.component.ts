@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { ProductsService } from '../products.service';
 import { DOCUMENT } from '@angular/common';
 
@@ -9,9 +9,9 @@ import { DOCUMENT } from '@angular/common';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   products = this.productServ.ProductArray(6);
-
-  backgrounds: number[] = [715, 360, 1006, 135, 1058, 788, 1031, 466, 62, 992];
   id = 0;
+  backgrounds: number[] = [715, 360, 1006, 135, 1058, 788, 1031, 466, 62, 992, 1022, 940];
+  
   constructor(private productServ: ProductsService, @Inject(DOCUMENT) document: Document) { }
 
   ngOnInit(): void {

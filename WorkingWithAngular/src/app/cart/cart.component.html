@@ -9,3 +9,30 @@
 <ng-template #empty_cart>
   <h2>empty car? look for products.</h2>
 </ng-template>
+
+<section class="recommended-section">
+  <h2 style="margin: 0.7rem">Recommended products</h2>
+  <div class="recommended-container">
+    <button class="swipe-button" type="button"><</button>
+
+    <div class="product-container">
+      <div class="product-image"><img src="{{ product.image }}" /></div>
+      <div class="product-info">
+        <p class="product-name">{{ product.name }}</p>
+        <p>by {{ product.author }}</p>
+
+        <div class="price-container">
+          <span class="other">$</span>
+          <span class="price" *ngIf="product.stringPrice !== undefined">{{ product.stringPrice.split(".")[0] }}</span>
+          <span class="other" *ngIf="product.stringPrice !== undefined">{{ product.stringPrice.split(".")[1] }}</span>
+        </div>
+
+        <button type="button" class="buy-button cart">Remove from cart</button>
+        <button type="button" class="buy-button cart">Add to cart</button>
+        <button type="button" class="buy-button">Buy now</button>
+      </div>
+    </div>
+
+    <button class="swipe-button" type="button">></button>
+  </div>
+</section>

@@ -20,10 +20,10 @@
 }
 
 .product-image {
-  display: block;
+/*  display: block;
   margin: 0.5rem auto;
   width: 50%;
-  height: auto;
+  height: auto;*/
 }
 
 .price-container {
@@ -33,9 +33,9 @@
   font-family: Arial, sans-serif
 }
 
-  .price-container > .other {
-    padding-top: 0.2rem;
-  }
+.price-container > .other {
+  padding-top: 0.2rem;
+}
 
 .price {
   font-size: 30px;

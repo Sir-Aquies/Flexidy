@@ -1,5 +1,6 @@
-<h1>Products</h1>
 
-<div *ngFor="let product of products">
-  <app-singular-product [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+<div class="list-container">
+  <h1>Products</h1>
+  <app-singular-product *ngFor="let product of products" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
 </div>
+
