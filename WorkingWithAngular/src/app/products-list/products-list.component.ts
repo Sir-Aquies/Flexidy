@@ -10,9 +10,9 @@ import { ProductsService, Product } from '../products.service';
 export class ProductsListComponent implements OnInit {
   //TODO -  add pagination.
 
-  products = this.productsServ.products;
+  products = this.productServ.products;
 
-  constructor(public cart: CartService, private productsServ: ProductsService) {}
+  constructor(public cart: CartService, private productServ: ProductsService) {}
 
   ngOnInit(): void {
   }

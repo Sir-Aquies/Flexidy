@@ -142,7 +142,7 @@
 }
 
 .another-section {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
   height: fit-content;
   font-family: "Lato", sans-serif;
@@ -211,6 +211,10 @@
 }
 
 @media screen and (min-width: 840px) {
+  .another-section {
+    width: 60%;
+  }
+
   .benefits {
     width: 60%;
   }

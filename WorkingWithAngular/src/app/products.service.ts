@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface Product {
   name: string,
@@ -16,9 +16,34 @@ export interface Product {
 })
 export class ProductsService {
   products: Product[] = [];
+  single = new BehaviorSubject<any>(this.SingleProduct());
 
   constructor(private http: HttpClient) {
     this.fillArray(20);
+  }
+
+  SingleProduct() {
+    this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").subscribe(data => {
+      const product: Product = {
+        name: (data as any).short_sentence,
+        uid: (data as any).uid,
+        price: Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100
+      };
+
+      product.stringPrice = product.price.toFixed(2);
+
+      this.getPicsum(Math.floor(Math.random() * 1085)).subscribe(data => {
+        if (data.status === 200) {
+          product.image = data.url;
+        }
+      });
+
+      this.getJSON("https://random-data-api.com/api/users/random_user").subscribe(data => {
+        product.author = `${(data as any).first_name} ${(data as any).last_name}`;
+      });
+
+      this.single.next(product)
+    });
   }
 
   ProductArray(amount: number): Product[] {
