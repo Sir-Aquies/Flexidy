@@ -9,12 +9,19 @@
 </ng-template>
 
 <section class="recommended-section">
-  <h2 style="margin: 0.7rem">Recommended products</h2>
+  <h3 style="margin: 0.7rem">Recommended products</h3>
   <div class="recommended-container">
-    <button class="swipe-button" (click)="leftSwipe()"  type="button"><</button>
+    <button class="swipe-button" (click)="leftSwipe()" type="button"><</button>
 
     <app-singular-product *ngIf="product !== undefined" [product]="product" [onCart]="false" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
-
+    <!--*ngFor="let recom of recomLine"-->
     <button class="swipe-button" (click)="rightSwipe()" type="button">></button>
+  </div>
+</section>
+
+<section class="recently-section">
+  <h3 style="margin: 0.7rem">Recently view</h3>
+  <div class="slide-container">
+    <app-singular-product *ngFor="let product of recently" [product]="product" [onCart]="false" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
   </div>
 </section>

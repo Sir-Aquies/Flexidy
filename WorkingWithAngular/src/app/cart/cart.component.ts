@@ -1,21 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { CartService } from '../cart.service';
 import { ProductsService, Product } from '../products.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, AfterViewInit {
 
   items = this.cart.getItems();
-  recommended = this.productServ.ProductArray(10);
+  recommendations: Product[] = [];
+  recomLine: Product[] = [];
   product = <any>{};
+  recently: Product[] = this.productServ.ProductArray(10);
+  index = 0;
 
-  constructor(private cart: CartService, private productServ: ProductsService) {
-    //this.product = productServ.products[Math.floor(Math.random() * productServ.products.length)];
-    this.productServ.single.subscribe((value: Product) => this.product = value);
+  constructor(private cart: CartService, private productServ: ProductsService, @Inject(DOCUMENT) private document: Document) {
+    this.productServ.recommended.subscribe((value: Product[]) => { this.recommendations = value })
+    //for (let i = 0; i < 10; i++) {
+    //  this.recomLine.push(this.recommendations[i]);
+    //}
+    this.product = this.recommendations[this.index];
+    if (this.product === undefined) {
+      this.productServ.single.subscribe((value: Product) => this.product = value);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    window.addEventListener("resize", function () {
+    });
   }
 
   ngOnInit(): void {
@@ -39,10 +54,16 @@ export class CartComponent implements OnInit {
   }
 
   leftSwipe() {
-    this.productServ.SingleProduct();
+    if (this.index > 0) {
+      this.index--;
+      this.product = this.recommendations[this.index];
+    }
   }
 
   rightSwipe() {
-    this.productServ.SingleProduct();
+    if (this.index < this.recommendations.length - 1) {
+      this.index++;
+      this.product = this.recommendations[this.index];
+    }
   }
 }

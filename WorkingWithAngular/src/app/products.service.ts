@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
 export interface Product {
   name: string,
@@ -16,13 +16,14 @@ export interface Product {
 })
 export class ProductsService {
   products: Product[] = [];
-  single = new BehaviorSubject<any>(this.SingleProduct());
+  single = new BehaviorSubject<Product>(this.SingleProduct());
+  recommended = new BehaviorSubject<Product[]>(this.ProductArray(20));
 
   constructor(private http: HttpClient) {
     this.fillArray(20);
   }
 
-  SingleProduct() {
+  SingleProduct(): any {
     this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").subscribe(data => {
       const product: Product = {
         name: (data as any).short_sentence,
@@ -62,14 +63,13 @@ export class ProductsService {
         this.getPicsum(Math.floor(Math.random() * 1085)).subscribe(data => {
           if (data.status === 200) {
             product.image = data.url;
+            output.push(product);
           }
         });
 
         this.getJSON("https://random-data-api.com/api/users/random_user").subscribe(data => {
           product.author = `${(data as any).first_name} ${(data as any).last_name}`;
         });
-
-        output.push(product);
       });
 
       amount--;

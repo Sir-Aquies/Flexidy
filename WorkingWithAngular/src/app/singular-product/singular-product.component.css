@@ -1,8 +1,22 @@
+:host-context(.slide-container) .product-container {
+  display: block;
+  min-width: 18.75rem;
+}
+
+:host-context(.slide-container) .product-info {
+  margin-top: 0.4rem;
+  margin-left: 0;
+}
+
 .product-container {
   width: 100%;
   padding: 0.5rem;
   margin: 0.5rem 0;
   border: 1px solid rgba(0,0,0,0.2);
+}
+
+.product-container p {
+  margin: 0;
 }
 
 .product-image {
@@ -19,9 +33,6 @@
   margin-top: 0.4rem;
 }
 
-.product-container p {
-  margin: 0;
-}
 
 .product-name {
   font-size: 24px;
