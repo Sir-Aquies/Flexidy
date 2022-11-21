@@ -1,11 +1,15 @@
-:host-context(.slide-container) .product-container {
+:host-context([vertical-product="true"]) .product-container {
   display: block;
   min-width: 18.75rem;
 }
 
-:host-context(.slide-container) .product-info {
+:host-context([vertical-product="true"]) .product-info {
   margin-top: 0.4rem;
   margin-left: 0;
+}
+
+:host-context([product-width="fixed"]) .product-container {
+  width: 290px;
 }
 
 .product-container {

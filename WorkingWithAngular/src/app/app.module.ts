@@ -10,6 +10,7 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
 import { SingularProductComponent } from './singular-product/singular-product.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SingularProductComponent } from './singular-product/singular-product.co
     HomeComponent,
     CartComponent,
     SingularProductComponent,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, AppRoutingModule,

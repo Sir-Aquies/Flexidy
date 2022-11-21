@@ -1,4 +1,4 @@
-<div class="product-container" *ngIf="product.image">
+<div class="product-container" *ngIf="product != undefined">
   <div class="product-image"><img src="{{ product.image }}" /></div>
   <div class="product-info">
     <p class="product-name">{{ product.name }}</p>
