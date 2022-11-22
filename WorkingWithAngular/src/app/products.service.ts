@@ -17,7 +17,8 @@ export interface Product {
 export class ProductsService {
   products: Product[] = [];
   single = new BehaviorSubject<Product>(this.SingleProduct());
-  recommended = new BehaviorSubject<Product[]>(this.ProductArray(20));
+  recommended = new BehaviorSubject<Product[]>(this.ProductArray(15));
+  recently = new BehaviorSubject<Product[]>(this.ProductArray(10));
 
   constructor(private http: HttpClient) {
     this.fillArray(20);
@@ -92,14 +93,13 @@ export class ProductsService {
         this.getPicsum(Math.floor(Math.random() * 1085)).subscribe(data => {
           if (data.status === 200) {
             product.image = data.url;
+            this.products.push(product);
           }
         });
 
         this.getJSON("https://random-data-api.com/api/users/random_user").subscribe(data => {
           product.author = `${(data as any).first_name} ${(data as any).last_name}`;
         });
-
-        this.products.push(product);
       });
 
       amount--;

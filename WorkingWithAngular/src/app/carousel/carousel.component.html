@@ -1,7 +1,11 @@
-<button class="swipe-button" (click)="leftSwipe()" type="button"><</button>
 
-<div id="carousel" class="products-container" vertical-product="true" product-width="fixed">
-  <app-singular-product *ngFor="let product of current" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+<span class="pages">{{currentPage + 1}} of {{pages}}</span>
+<div class="carousel-container">
+  <button class="swipe-button" (click)="leftSwipe()" type="button"><</button>
+
+  <div id="carousel" class="products-container" vertical-product="true" product-width="fixed">
+    <app-singular-product *ngFor="let product of current" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+  </div>
+
+  <button class="swipe-button" (click)="rightSwipe()" type="button">></button>
 </div>
-
-<button class="swipe-button" (click)="rightSwipe()" type="button">></button>

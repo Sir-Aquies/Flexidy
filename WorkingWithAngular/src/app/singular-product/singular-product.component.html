@@ -14,7 +14,8 @@
     <button type="button" class="buy-button cart" *ngIf="!onCart" (click)="addToCart.emit()">Add to cart</button>
     <button type="button" class="buy-button">Buy now</button>
   </div>
-</div>
 
-<!--<button type="button" class="buy-button cart" *ngIf="cart.items.indexOf(product) !== -1" (click)="removeFromCart.emit(product)">Remove from cart</button>
-<button type="button" class="buy-button cart" *ngIf="cart.items.indexOf(product) === -1" (click)="addToCart.emit(product)">Add to cart</button>-->
+  <div class="cart-price">
+    ${{product.stringPrice}}
+  </div>
+</div>

@@ -1,4 +1,4 @@
-:host {
+.carousel-container {
   width: 100%;
   display: flex;
 }
@@ -7,6 +7,10 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
+}
+
+.pages {
+  float: right;
 }
 
 .swipe-button {

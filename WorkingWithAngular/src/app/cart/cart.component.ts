@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { CartService } from '../cart.service';
 import { ProductsService, Product } from '../products.service';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-cart',
@@ -12,17 +11,18 @@ export class CartComponent implements OnInit, AfterViewInit {
 
   items = this.cart.getItems();
   recommendations: Product[] = [];
+  recently: Product[] = [];
 
-  recently: Product[] = this.productServ.ProductArray(6);
-
-  //display the total cost of the cart
+  //show products depending on the client's device
   //create footer component
 
-  constructor(private cart: CartService, private productServ: ProductsService, @Inject(DOCUMENT) private document: Document) {
-    this.productServ.recommended.subscribe((value: Product[]) => { this.recommendations = value });
+  constructor(public cart: CartService, private productServ: ProductsService) {
   }
 
   ngAfterViewInit(): void {
+    this.productServ.recommended.subscribe((value: Product[]) => { this.recommendations = value });
+
+    this.productServ.recently.subscribe((value: Product[]) => { this.recently = value });
   }
 
   ngOnInit(): void {

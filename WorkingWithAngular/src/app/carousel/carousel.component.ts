@@ -10,85 +10,84 @@ import { DOCUMENT } from '@angular/common';
 })
 export class CarouselComponent implements OnInit, AfterViewInit {
   @Input() products: Product[] = [];
+  productPages: Product[][] =[];
   current: Product[] = [];
-  inicial = 0;
-  final = 0;
-  step = 0;
+  pages = 0;
+  currentPage = 0;
+  load = 0;
 
   constructor(@Inject(DOCUMENT) private document: Document, public cart: CartService) { }
 
-  ngAfterViewInit(): void {
+  loadCarousel() {
+    window.clearInterval(this.load);
     const carousel = this.document.getElementById('carousel') as HTMLDivElement;
-
-    window.addEventListener('resize', () => {
-      const width = 290;
-      let inicialAmount = Math.round(carousel.offsetWidth / width);
-
-      if (inicialAmount > 2) {
-        inicialAmount--;
-      }
-
-      this.current.splice(0, this.current.length);
-      for (let i = 0; i < inicialAmount; i++) {
-        this.current.push(this.products[i]);
-      }
-
-      this.inicial = 0;
-      this.final = this.current.length;
-      this.step = this.current.length;
-    });
-
-    this.inicial = 0;
-    this.final = this.current.length;
-    this.step = this.current.length;
-  }
-
-  ngOnInit(): void {
-    const carousel = this.document.getElementById('carousel') as HTMLDivElement;
-    const width = 290;
+    const width = 300;
     let inicialAmount = Math.round(carousel.offsetWidth / width);
 
     if (inicialAmount > 2) {
       inicialAmount--;
     }
 
-    this.current.splice(0, this.current.length);
-    for (let i = 0; i < inicialAmount; i++) {
-      this.current.push(this.products[i]);
+    let index = 0;
+    this.pages = Math.round(this.products.length / inicialAmount);
+    this.currentPage = 0;
+
+    this.productPages.forEach(value => {
+      value.splice(0, value.length);
+    })
+    this.productPages.splice(0, this.productPages.length);
+
+    for (let i = 0; i < this.pages; i++) {
+      const page: Product[] = [];
+      for (let j = 0; j < inicialAmount; j++) {
+        if (this.products[index] != undefined) {
+          page.push(this.products[index++]);
+        }
+      }
+      this.productPages.push(page);
     }
-    this.step = this.current.length;
+
+    this.current = this.productPages[0];
+  }
+
+  productsCheck() {
+    if (this.products.length !== 0) {
+      window.clearInterval(this.load);
+      this.loadCarousel();
+    }
+    else {
+      this.load = window.setInterval(() => { this.productsCheck() }, 2000);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.productsCheck();
+    window.addEventListener('resize', () => {
+      this.loadCarousel();
+    });
+  }
+
+  ngOnInit(): void {
+    
   }
 
   leftSwipe() {
-    if (this.inicial <= 0) {
-      return;
+    if (this.currentPage <= 0) {
+      this.currentPage = this.pages;
+      this.current = this.productPages[--this.currentPage];
     }
-
-    this.final = this.inicial;
-    this.inicial -= this.step;
-
-    this.current.splice(0, this.current.length);
-
-    for (let i = this.inicial; i < this.final; i++) {
-      if (this.products[i] !== undefined) {
-        this.current.push(this.products[i]);
-      }
+    else {
+      this.current = this.productPages[--this.currentPage];
     }
   }
 
   rightSwipe() {
-    if (this.final >= this.products.length) {
-      return;
+    if (this.currentPage >= (this.pages - 1)) {
+      this.currentPage = 0;
+      this.current = this.productPages[this.currentPage];
     }
-
-    this.inicial = this.final;
-    this.final += this.step;
-
-    this.current.splice(0, this.current.length);
-    for (let i = this.inicial; i < this.final; i++) {
-      if (this.products[i] !== undefined) {
-        this.current.push(this.products[i]);
-      }
+    else {
+      this.current = this.productPages[++this.currentPage];
     }
   }
 
