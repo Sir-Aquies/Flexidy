@@ -1,41 +1,68 @@
 <h1 style="margin:1rem;">Cart</h1>
 
 <section class="cart-section">
-  <div *ngIf="items.length !== 0; else empty_cart" cart-product="true" class="cart-container">
-    <div style="text-align: right; padding: 0 0.5rem;">price</div>
-    <app-singular-product *ngFor="let item of items" [product]="item" [onCart]="cart.items.indexOf(item) !== -1" (removeFromCart)="removeFromCart(item)"></app-singular-product>
-    <div style="text-align: right; padding: 0 0.5rem;">
-      <span style="font-size: 24px; font-weight: bold;">Items: {{ items.length }} | Total cost: ${{ cart.totalCost }}</span>
+  <div *ngIf="items.length !== 0; else empty_cart" cart-product class="cart-container">
+    <div style="width: 100%">
+      <div class="cart-text">price</div>
+
+      <app-singular-product *ngFor="let item of items" [product]="item" [onCart]="cart.items.indexOf(item) !== -1" (removeFromCart)="removeFromCart(item)"></app-singular-product>
+    </div>
+
+    <div class="cart-text" style="align-self: flex-end; border-top: 1px solid rgba(0,0,0,0.2); padding-top: 0.5rem">
+      <span style="font-weight: bold">Items: {{ items.length }} | Total cost: ${{ cart.totalCost }}</span>
     </div>
   </div>
 
   <ng-template #empty_cart>
     <div class="cart-container">
+      <div class="empty-cart">
+        <h1>Your shooping cart is empty</h1>
+        <p>
+          Fusce consectetur elementum nulla, pellentesque vulputate urna iaculis ac.
+        </p>
 
+        <p>
+          Quisque ante sapien, vehicula vitae dui non, condimentum vestibulum erat.
+          Proin eget molestie sapien.
+        </p>
+      </div>
     </div>
   </ng-template>
+
+  <div class="related-section" *ngIf="desktop">
+    <h3 style="margin: 0.5rem 0.5rem 0">Related products</h3>
+    <div class="vertical-container" vertical-product vertical-container>
+      <app-singular-product *ngFor="let product of related" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+    </div>
+  </div>
 </section>
 
-<section class="recommended-section">
+<section class="recommended-section" *ngIf="desktop; else recommended_mobile">
   <h3 style="margin: 0.5rem 0.5rem 0">Recommended products</h3>
   <app-carousel [products]="recommendations"></app-carousel>
 </section>
 
-<!--<section class="recently-section">
-  <h3 style="margin: 0.7rem">Recommended products</h3>
-  <div class="slide-container" vertical-product="true">
-    <app-singular-product *ngFor="let product of recommendations" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
-  </div>
-</section>-->
+<ng-template #recommended_mobile>
+  <section class="recommended-section">
+    <h3 style="margin: 0.7rem">Recommended products</h3>
+    <div class="slide-container" vertical-product="true">
+      <app-singular-product *ngFor="let product of recommendations" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+    </div>
+  </section>
+</ng-template>
 
-<section class="recently-section">
+<section class="recently-section" *ngIf="desktop; else recently_mobile">
   <h3 style="margin: 0.5rem 0.5rem 0">Recently view</h3>
   <app-carousel [products]="recently"></app-carousel>
 </section>
 
-<!--<section class="recently-section">
-  <h3 style="margin: 0.7rem">Recently view</h3>
-  <div class="slide-container" vertical-product="true">
-    <app-singular-product *ngFor="let product of recently" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
-  </div>
-</section>-->
+<ng-template #recently_mobile>
+  <section class="recently-section">
+    <h3 style="margin: 0.7rem">Recently view</h3>
+    <div class="slide-container" vertical-product="true">
+      <app-singular-product *ngFor="let product of recently" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+    </div>
+  </section>
+</ng-template>
+
+

@@ -12,9 +12,12 @@ export class CartComponent implements OnInit, AfterViewInit {
   items = this.cart.getItems();
   recommendations: Product[] = [];
   recently: Product[] = [];
+  related: Product[] = this.productServ.ProductArray(2);
+  desktop = false;
 
-  //show products depending on the client's device
-  //create footer component
+  //make a refresh button for product-list.
+  //create a explore component/page for shearching images depending on size.
+  //Create a product-details component/page to show a single product.
 
   constructor(public cart: CartService, private productServ: ProductsService) {
   }
@@ -23,6 +26,21 @@ export class CartComponent implements OnInit, AfterViewInit {
     this.productServ.recommended.subscribe((value: Product[]) => { this.recommendations = value });
 
     this.productServ.recently.subscribe((value: Product[]) => { this.recently = value });
+
+    //window.addEventListener('resize', () => {
+    //  this.desktopCheck();
+    //});
+
+    this.desktopCheck();
+  }
+
+  desktopCheck() {
+    if (window.innerWidth > 840) {
+      this.desktop = true;
+    }
+    else {
+      this.desktop = false;
+    }
   }
 
   ngOnInit(): void {

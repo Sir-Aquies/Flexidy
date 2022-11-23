@@ -3,7 +3,7 @@
 <div class="carousel-container">
   <button class="swipe-button" (click)="leftSwipe()" type="button"><</button>
 
-  <div id="carousel" class="products-container" vertical-product="true" product-width="fixed">
+  <div id="carousel" class="products-container" vertical-product>
     <app-singular-product *ngFor="let product of current" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
   </div>
 

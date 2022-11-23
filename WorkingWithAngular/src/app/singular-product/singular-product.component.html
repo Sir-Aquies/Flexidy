@@ -12,7 +12,7 @@
 
     <button type="button" class="buy-button cart" *ngIf="onCart" (click)="removeFromCart.emit()">Remove from cart</button>
     <button type="button" class="buy-button cart" *ngIf="!onCart" (click)="addToCart.emit()">Add to cart</button>
-    <button type="button" class="buy-button">Buy now</button>
+    <button type="button" class="buy-button" id="buy_button">Buy now</button>
   </div>
 
   <div class="cart-price">

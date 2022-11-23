@@ -21,7 +21,7 @@ export class ProductsService {
   recently = new BehaviorSubject<Product[]>(this.ProductArray(10));
 
   constructor(private http: HttpClient) {
-    this.fillArray(20);
+    this.fillArray(10);
   }
 
   SingleProduct(): any {

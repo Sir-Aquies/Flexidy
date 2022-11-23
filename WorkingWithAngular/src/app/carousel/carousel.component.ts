@@ -56,7 +56,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
       this.loadCarousel();
     }
     else {
-      this.load = window.setInterval(() => { this.productsCheck() }, 2000);
+      this.load = window.setInterval(() => { this.productsCheck() }, 4000);
     }
   }
 
