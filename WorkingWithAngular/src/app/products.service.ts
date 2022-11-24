@@ -44,7 +44,7 @@ export class ProductsService {
         product.author = `${(data as any).first_name} ${(data as any).last_name}`;
       });
 
-      this.single.next(product)
+      this.single.next(product);
     });
   }
 
@@ -80,6 +80,7 @@ export class ProductsService {
   }
 
   fillArray(amount: number) {
+    this.products.splice(0, this.products.length);
     while (amount > 0) {
       this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").subscribe(data => {
         const product: Product = {
@@ -112,6 +113,6 @@ export class ProductsService {
 
 
   private getPicsum(id: number): Observable<any> {
-    return this.http.get(`https://picsum.photos/id/${id}/400/300`, { observe: 'response', responseType: 'text' });
+    return this.http.get(`https://picsum.photos/id/${id}/500/400`, { observe: 'response', responseType: 'text' });
   }
 }

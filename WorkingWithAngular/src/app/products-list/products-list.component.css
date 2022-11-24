@@ -1,6 +1,44 @@
 .list-container {
   width: 100%;
+  height: 100%;
   padding: 0.5rem;
   max-width: 80rem;
   margin: 0 auto;
+}
+
+.confg-container {
+  width: 100%;
+  padding: 0.5rem 0;
+  display: flex;
+  gap: 1rem;
+  font-family: "Lato", sans-serif;
+  font-size: 1.3rem;
+  color: black;
+  align-items: center;
+}
+
+.normal-btn {
+  padding: 0.5rem;
+  height: fit-content;
+  width: fit-content;
+  font-family: "Lato", sans-serif;
+  font-size: 1.3rem;
+  color: black;
+  background-color: transparent;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.normal-slct {
+  padding: 0.5rem 0;
+  height: fit-content;
+  width: fit-content;
+  font-family: "Lato", sans-serif;
+  font-size: 1.3rem;
+  color: black;
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }

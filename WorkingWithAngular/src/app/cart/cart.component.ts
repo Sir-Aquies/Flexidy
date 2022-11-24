@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { ProductsService, Product } from '../products.service';
 
@@ -12,38 +12,26 @@ export class CartComponent implements OnInit, AfterViewInit {
   items = this.cart.getItems();
   recommendations: Product[] = [];
   recently: Product[] = [];
-  related: Product[] = this.productServ.ProductArray(2);
+  related: Product[] = this.storage.ProductArray(2);
   desktop = false;
 
-  //make a refresh button for product-list.
   //create a explore component/page for shearching images depending on size.
-  //Create a product-details component/page to show a single product.
 
-  constructor(public cart: CartService, private productServ: ProductsService) {
+  constructor(public cart: CartService, private storage: ProductsService) {
   }
 
   ngAfterViewInit(): void {
-    this.productServ.recommended.subscribe((value: Product[]) => { this.recommendations = value });
+    this.storage.recommended.subscribe((value: Product[]) => { this.recommendations = value });
 
-    this.productServ.recently.subscribe((value: Product[]) => { this.recently = value });
+    this.storage.recently.subscribe((value: Product[]) => { this.recently = value });
 
     //window.addEventListener('resize', () => {
     //  this.desktopCheck();
     //});
-
-    this.desktopCheck();
-  }
-
-  desktopCheck() {
-    if (window.innerWidth > 840) {
-      this.desktop = true;
-    }
-    else {
-      this.desktop = false;
-    }
   }
 
   ngOnInit(): void {
+    this.desktop = window.innerWidth > 840 ? true : false;
   }
 
   addToCart(product: Product) {

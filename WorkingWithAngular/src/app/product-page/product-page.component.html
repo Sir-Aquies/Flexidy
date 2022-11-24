@@ -1,0 +1,19 @@
+<section>
+  <div class="product-showcase" product-page>
+    <app-singular-product *ngIf="product !== undefined" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+  </div>
+</section>
+
+<section class="recommended-section" no-buy-button *ngIf="desktop; else recommended_mobile">
+  <h3 style="margin: 0.5rem 0.5rem 0">Recommended products</h3>
+  <app-carousel [products]="recommendations"></app-carousel>
+</section>
+
+<ng-template #recommended_mobile>
+  <section class="recommended-section">
+    <h3 style="margin: 0.7rem">Recommended products</h3>
+    <div class="slide-container" no-buy-button vertical-product>
+      <app-singular-product *ngFor="let product of recommendations" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+    </div>
+  </section>
+</ng-template>

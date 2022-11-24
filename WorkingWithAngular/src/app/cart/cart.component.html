@@ -31,13 +31,13 @@
 
   <div class="related-section" *ngIf="desktop">
     <h3 style="margin: 0.5rem 0.5rem 0">Related products</h3>
-    <div class="vertical-container" vertical-product vertical-container>
+    <div class="vertical-container" vertical-product vertical-container no-buy-button>
       <app-singular-product *ngFor="let product of related" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
     </div>
   </div>
 </section>
 
-<section class="recommended-section" *ngIf="desktop; else recommended_mobile">
+<section class="recommended-section" no-buy-button *ngIf="desktop; else recommended_mobile">
   <h3 style="margin: 0.5rem 0.5rem 0">Recommended products</h3>
   <app-carousel [products]="recommendations"></app-carousel>
 </section>
@@ -45,13 +45,13 @@
 <ng-template #recommended_mobile>
   <section class="recommended-section">
     <h3 style="margin: 0.7rem">Recommended products</h3>
-    <div class="slide-container" vertical-product="true">
+    <div class="slide-container" vertical-product no-buy-button>
       <app-singular-product *ngFor="let product of recommendations" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
     </div>
   </section>
 </ng-template>
 
-<section class="recently-section" *ngIf="desktop; else recently_mobile">
+<section class="recently-section" no-buy-button *ngIf="desktop; else recently_mobile">
   <h3 style="margin: 0.5rem 0.5rem 0">Recently view</h3>
   <app-carousel [products]="recently"></app-carousel>
 </section>
@@ -59,7 +59,7 @@
 <ng-template #recently_mobile>
   <section class="recently-section">
     <h3 style="margin: 0.7rem">Recently view</h3>
-    <div class="slide-container" vertical-product="true">
+    <div class="slide-container" vertical-product no-buy-button>
       <app-singular-product *ngFor="let product of recently" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
     </div>
   </section>

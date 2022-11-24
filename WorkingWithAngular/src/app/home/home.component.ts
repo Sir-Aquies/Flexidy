@@ -8,11 +8,11 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  products = this.productServ.ProductArray(6);
+  products = this.storage.ProductArray(6);
   id = 0;
-  backgrounds: number[] = [715, 360, 1006, 135, 1058, 788, 1031, 466, 62, 992, 1022, 940, 952, 65, 827, 683];
+  backgrounds: number[] = [715, 360, 1006, 135, 1058, 788, 1031, 466, 62, 992, 1022, 940, 952, 65, 827, 683, 120, 724];
 
-  constructor(private productServ: ProductsService, @Inject(DOCUMENT) private document: Document) {
+  constructor(private storage: ProductsService, @Inject(DOCUMENT) private document: Document) {
   }
 
   ngOnInit(): void {

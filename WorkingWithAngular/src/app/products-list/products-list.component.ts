@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { __values } from 'tslib';
 import { CartService } from '../cart.service';
 import { ProductsService, Product } from '../products.service';
 
@@ -9,12 +10,19 @@ import { ProductsService, Product } from '../products.service';
 })
 export class ProductsListComponent implements OnInit {
   //TODO -  add pagination.
+  products = this.storage.products;
 
-  products = this.productServ.products;
-
-  constructor(public cart: CartService, private productServ: ProductsService) {}
+  constructor(public cart: CartService, private storage: ProductsService) {}
 
   ngOnInit(): void {
+  }
+
+  refreshList() {
+    let amount = document.getElementById('product_amount') as HTMLSelectElement;
+    if (amount) {
+      this.storage.fillArray(parseInt(amount.value));
+      this.products = this.storage.products;
+    }
   }
 
   addToCart(product: Product) {
@@ -33,5 +41,4 @@ export class ProductsListComponent implements OnInit {
   removeFromCart(product: Product) {
     this.cart.removeItem(product);
   }
-
 }

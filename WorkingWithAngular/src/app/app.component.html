@@ -1,10 +1,11 @@
 <app-top-bar></app-top-bar>
 
 <div class="main-container">
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="onActivate()"></router-outlet>
 </div>
 
 <app-footer></app-footer>
+
 
 
 

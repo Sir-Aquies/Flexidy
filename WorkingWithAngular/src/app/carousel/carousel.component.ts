@@ -19,7 +19,6 @@ export class CarouselComponent implements OnInit, AfterViewInit {
   constructor(@Inject(DOCUMENT) private document: Document, public cart: CartService) { }
 
   loadCarousel() {
-    window.clearInterval(this.load);
     const carousel = this.document.getElementById('carousel') as HTMLDivElement;
     const width = 300;
     let inicialAmount = Math.round(carousel.offsetWidth / width);
@@ -56,7 +55,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
       this.loadCarousel();
     }
     else {
-      this.load = window.setInterval(() => { this.productsCheck() }, 4000);
+      this.load = window.setInterval(() => { this.productsCheck() }, 3000);
     }
   }
 

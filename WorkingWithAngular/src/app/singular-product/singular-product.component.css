@@ -21,15 +21,17 @@
 :host-context([vertical-container]) .product-container {
   border: 0;
   margin: 0 auto;
-  font-size: 16px;
+  --fontSize: 16px;
 }
 
-:host-context([vertical-container]) .product-name {
-  font-size: 20px;
-}
-
-:host-context([vertical-container]) #buy_button {
+:host-context([no-buy-button]) #buy_button {
   display: none;
+}
+
+:host-context([product-page]) .product-container {
+  min-height: 450px;
+  border: 0;
+  --fontSize: 1.7rem;
 }
 
 .cart-price {
@@ -37,7 +39,7 @@
   position: absolute;
   right: 0.5rem;
   top: 0.5rem;
-  font-size: 24px;
+  font-size: var(--fontSize);
   font-weight: bold;
 }
 
@@ -48,6 +50,9 @@
   margin: 0.5rem 0;
   border: 1px solid rgba(0,0,0,0.2);
   border-radius: 5px;
+  font-family: "Lato", sans-serif;
+  --fontSize: 1.3rem;
+  font-size: var(--fontSize);
 }
 
 .product-container p {
@@ -70,7 +75,8 @@
 }
 
 .product-name {
-  font-size: 24px;
+  color: rgba(0,0,0,0.8);
+  text-decoration: none;
   width: fit-content;
 }
 
@@ -90,7 +96,7 @@
 }
 
 .buy-button {
-  font-size: 18px;
+  font-size: var(--fontSize);
   padding: 0.5rem;
   display: block;
   background-color: black;
