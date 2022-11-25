@@ -1,6 +1,22 @@
 <section>
-  <div class="product-showcase" product-page>
-    <app-singular-product *ngIf="product !== undefined" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+  <div class="product-showcase" *ngIf="product !== undefined" product-page>
+    <div>
+      <img class="product-image" (click)="expandImg()" src="https://picsum.photos/id/{{id}}/800/700" [alt]="product.name" />
+    </div>
+    <div class="product-info">
+      <h1 style="margin: 0">{{ product.name }}</h1>
+      <div>by {{ product.author }}</div>
+
+      <strong class="price-container">
+        <span class="other">$</span>
+        <span class="price" *ngIf="product.stringPrice !== undefined">{{ product.stringPrice.split(".")[0] }}</span>
+        <span class="other" *ngIf="product.stringPrice !== undefined">{{ product.stringPrice.split(".")[1] }}</span>
+      </strong>
+
+      <button type="button" class="buy-button cart" *ngIf="cart.items.indexOf(product) !== -1" (click)="removeFromCart(product)">Remove from cart</button>
+      <button type="button" class="buy-button cart" *ngIf="!(cart.items.indexOf(product) !== -1)" (click)="addToCart(product)">Add to cart</button>
+      <button type="button" class="buy-button" id="buy_button">Buy now</button>
+    </div>
   </div>
 </section>
 
@@ -17,3 +33,8 @@
     </div>
   </section>
 </ng-template>
+
+<div id="full_size" class="background">
+  <img class="background-close" src="/assets/close-line-icon.svg" />
+  <img class="expand-image" src="https://picsum.photos/id/{{id}}/1000/900" />
+</div>
