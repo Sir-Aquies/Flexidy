@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { __values } from 'tslib';
 import { CartService } from '../cart.service';
 import { ProductsService, Product } from '../products.service';
@@ -8,13 +8,61 @@ import { ProductsService, Product } from '../products.service';
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.css']
 })
-export class ProductsListComponent implements OnInit {
-  //TODO -  add pagination.
+export class ProductsListComponent implements OnInit, AfterContentInit, OnDestroy {
+  //TODO -  add more products when scrolling down.
   products = this.storage.products;
+  columns: Product[][] = []
+  controller = new AbortController();
+  load = 0;
 
-  constructor(public cart: CartService, private storage: ProductsService) {}
+  constructor(public cart: CartService, private storage: ProductsService) { }
+
+  ngOnDestroy(): void {
+    this.controller.abort();
+  }
+
+  ngAfterContentInit(): void {
+    this.productsCheck();
+  }
 
   ngOnInit(): void {
+    window.addEventListener('resize', () => {
+      this.FlexColumn();
+    }, {signal: this.controller.signal});
+  }
+
+  productsCheck() {
+    if (this.products.length !== 0) {
+      clearInterval(this.load);
+      this.FlexColumn();
+    }
+    else {
+      this.load = window.setInterval(() => { this.productsCheck() }, 5000);
+    }
+  }
+
+  FlexColumn() {
+    const container = document.getElementById("products_flex") as HTMLDivElement;
+    let columnsAmount = Math.round(container.offsetWidth / 500);
+    let productPerColumn = Math.floor(this.products.length / columnsAmount);
+    let index = 0;
+
+    this.columns.forEach(value => {
+      value.splice(0, value.length);
+    });
+    this.columns.splice(0, this.columns.length);
+
+    for (let i = 0; i < columnsAmount; i++) {
+      const products: Product[] = [];
+
+      for (let j = 0; j < productPerColumn; j++) {
+        if (this.products[index] != undefined) {
+          products.push(this.products[index++]);
+        }
+      }
+
+      this.columns.push(products);
+    }
   }
 
   refreshList() {

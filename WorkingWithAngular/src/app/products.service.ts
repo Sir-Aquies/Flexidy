@@ -21,7 +21,7 @@ export class ProductsService {
   recently = new BehaviorSubject<Product[]>(this.ProductArray(10));
 
   constructor(private http: HttpClient) {
-    this.fillArray(10);
+    this.fillArray(20);
   }
 
   SingleProduct(): any {
@@ -111,8 +111,13 @@ export class ProductsService {
     return this.http.get<any>(url, {observe:'body', responseType:'json'});
   }
 
-
   private getPicsum(id: number): Observable<any> {
-    return this.http.get(`https://picsum.photos/id/${id}/500/400`, { observe: 'response', responseType: 'text' });
+    let sizes: number[][] = [[500, 400], [500, 750], [500, 500]];
+    let size = sizes[Math.floor(Math.random() * sizes.length)];
+    let width = size[0];
+    let height = size[1];
+
+    return this.http.get(`https://picsum.photos/id/${ id }/${ width }/${ height }`, { observe: 'response', responseType: 'text' });
+    //return this.http.get(`https://picsum.photos/id/${id}/500/400`, { observe: 'response', responseType: 'text' });
   }
 }

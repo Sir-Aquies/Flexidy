@@ -1,5 +1,5 @@
 <div class="product-container" *ngIf="product != undefined">
-  <div class="product-image"><img src="{{ product.image }}" /></div>
+  <div class="image-container"><a [routerLink]="['/product', product.name]"><img class="product-image" src="{{ product.image }}" /></a></div>
   <div class="product-info">
     <a [routerLink]="['/product', product.name]" class="product-name"><h3 style="margin: 0; font-weight: normal">{{ product.name }}</h3></a>
     <p>by {{ product.author }}</p>

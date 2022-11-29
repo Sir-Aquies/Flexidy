@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { CartService } from '../cart.service';
 import { Product } from '../products.service';
 import { DOCUMENT } from '@angular/common';
@@ -8,13 +8,14 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.css']
 })
-export class CarouselComponent implements OnInit, AfterViewInit {
+export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() products: Product[] = [];
-  productPages: Product[][] =[];
+  productPages: Product[][] = [];
   current: Product[] = [];
   pages = 0;
   currentPage = 0;
   load = 0;
+  controller = new AbortController();
 
   constructor(@Inject(DOCUMENT) private document: Document, public cart: CartService) { }
 
@@ -62,8 +63,12 @@ export class CarouselComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.productsCheck();
     window.addEventListener('resize', () => {
-      this.loadCarousel();
-    });
+      this.loadCarousel()
+    }, {signal: this.controller.signal});
+  }
+
+  ngOnDestroy(): void {
+    this.controller.abort();
   }
 
   ngOnInit(): void {

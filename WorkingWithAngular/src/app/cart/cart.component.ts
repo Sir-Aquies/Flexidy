@@ -15,7 +15,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   related: Product[] = this.storage.ProductArray(2);
   desktop = false;
 
-  //create a explore component/page for shearching images depending on size.
+  //TODO - create a explore component/page for shearching images depending on size.
 
   constructor(public cart: CartService, private storage: ProductsService) {
   }

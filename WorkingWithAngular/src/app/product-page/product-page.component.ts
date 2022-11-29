@@ -47,6 +47,7 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
       this.product = this.storage.recently.value.find(pro => pro.name === productName);
     }
 
+    //TODO - refactor this.
     if (this.product?.image?.split('/')[4] != undefined) {
       this.id = parseInt(this.product?.image?.split('/')[4]);
     }

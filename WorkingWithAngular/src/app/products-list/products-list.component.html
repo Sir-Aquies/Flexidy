@@ -7,16 +7,24 @@
 
     <label>Items per page:</label>
     <select class="normal-slct" name="product-amount" id="product_amount" (change)="refreshList()">
-      <option value="2">2</option>
-      <option value="5">5</option>
-      <option value="8">8</option>
-      <option value="10" selected>10</option>
-      <option value="12">12</option>
+      <option value="10">10</option>
       <option value="15">15</option>
-      <option value="20">20</option>
+      <option value="20" selected>20</option>
+      <option value="25">25</option>
+      <option value="30">30</option>
+      <option value="35">35</option>
+      <option value="40">40</option>
     </select>
   </div>
-  
-  <app-singular-product *ngFor="let product of products" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
+
+  <div id="products_flex" class="products-flex">
+    <div *ngFor="let column of columns" class="products-columns">
+      <a *ngFor="let product of column" [routerLink]="['/product', product.name]">
+        <app-singular-product product-card [product]="product"
+                              [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)"
+                              (removeFromCart)="removeFromCart(product)"></app-singular-product>
+      </a>
+    </div>
+  </div>
 </div>
 

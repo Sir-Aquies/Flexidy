@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   padding: 0.5rem;
-  max-width: 80rem;
+  max-width: 130rem;
   margin: 0 auto;
 }
 
@@ -34,11 +34,27 @@
 .normal-slct {
   padding: 0.5rem 0;
   height: fit-content;
-  width: fit-content;
+  width: fit-content; 
   font-family: "Lato", sans-serif;
   font-size: 1.3rem;
   color: black;
   background-color: transparent;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+}
+
+.products-flex {
+  width: 100%;
+}
+
+.products-columns {
+  width: 100%;
+}
+
+@media screen and (min-width: 840px) {
+  .products-flex {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
 }
