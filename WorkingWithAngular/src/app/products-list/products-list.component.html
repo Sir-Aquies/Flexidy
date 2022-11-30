@@ -19,11 +19,14 @@
 
   <div id="products_flex" class="products-flex">
     <div *ngFor="let column of columns" class="products-columns">
-      <a *ngFor="let product of column" [routerLink]="['/product', product.name]">
-        <app-singular-product product-card [product]="product"
-                              [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)"
-                              (removeFromCart)="removeFromCart(product)"></app-singular-product>
-      </a>
+      <app-singular-product *ngFor="let product of column" product-card [product]="product"
+                            [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)"
+                            (removeFromCart)="removeFromCart(product)"></app-singular-product>
+      <!--<a *ngFor="let product of column" style="text-decoration: none" [routerLink]="['/product', product.name]">
+    <app-singular-product product-card [product]="product"
+                          [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)"
+                          (removeFromCart)="removeFromCart(product)"></app-singular-product>
+  </a>-->
     </div>
   </div>
 </div>

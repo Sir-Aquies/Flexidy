@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../cart.service';
-import { ProductsService, Product } from '../products.service';
+import { ProductsService, Product, Size } from '../products.service';
 
 
 @Component({
@@ -13,6 +13,10 @@ import { ProductsService, Product } from '../products.service';
 export class ProductPageComponent implements OnInit, AfterViewInit {
   product: Product | undefined;
   id: number = 0;
+  width = 0;
+  height = 0;
+  expandWidth = 0;
+  expandHeight = 0;
   recommendations: Product[] = [];
   recently: Product[] = [];
   related: Product[] = this.storage.ProductArray(2);
@@ -30,8 +34,8 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
 
     this.route.params.subscribe(
       params => {
-        const id = params['productName'];
-        this.getProduct(id);
+        const name = params['productName'];
+        this.getProduct(name);
       }
     );
   }
@@ -50,8 +54,29 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
     //TODO - refactor this.
     if (this.product?.image?.split('/')[4] != undefined) {
       this.id = parseInt(this.product?.image?.split('/')[4]);
+      switch (this.product.size) {
+        case Size.small:
+          this.width = 800;
+          this.height = 700;
+          this.expandWidth = 1000;
+          this.expandHeight = 900;
+          break;
+
+        case Size.medium:
+          this.width = 800;
+          this.height = 800;
+          this.expandWidth = 950;
+          this.expandHeight = 950;
+          break;
+
+        case Size.large:
+          this.width = 600;
+          this.height = 800;
+          this.expandWidth = 650;
+          this.expandHeight = 950;
+          break;
+      }
     }
-    
   }
 
   expandImg() {

@@ -1,7 +1,7 @@
 <section>
   <div class="product-showcase" *ngIf="product !== undefined" product-page>
     <div>
-      <img class="product-image" (click)="expandImg()" src="https://picsum.photos/id/{{id}}/800/700" [alt]="product.name" />
+      <img class="product-image" (click)="expandImg()" src="https://picsum.photos/id/{{ id }}/{{ width }}/{{ height }}" [alt]="product.name" />
     </div>
     <div class="product-info">
       <h1 style="margin: 0">{{ product.name }}</h1>
@@ -36,5 +36,6 @@
 
 <div id="full_size" class="background">
   <img class="background-close" src="/assets/close-line-icon.svg" />
-  <img class="expand-image" src="https://picsum.photos/id/{{id}}/1000/900" />
+  <!--1000/900-->
+  <img class="expand-image" src="https://picsum.photos/id/{{ id }}/{{ expandWidth }}/{{ expandHeight }}" />
 </div>

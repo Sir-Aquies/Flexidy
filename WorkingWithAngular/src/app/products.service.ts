@@ -9,6 +9,14 @@ export interface Product {
   price: number,
   image?: string,
   stringPrice?: string
+  size?: Size
+}
+
+export enum Size {
+  default,
+  medium,
+  large,
+  small
 }
 
 @Injectable({
@@ -24,7 +32,13 @@ export class ProductsService {
     this.fillArray(20);
   }
 
-  SingleProduct(): any {
+  RandomSize():Size {
+    const sizes: Size[] = [Size.small, Size.medium, Size.large];
+
+    return sizes[Math.floor(Math.random() * sizes.length)];
+  }
+
+  SingleProduct(size: Size = Size.default): any {
     this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").subscribe(data => {
       const product: Product = {
         name: (data as any).short_sentence,
@@ -32,9 +46,16 @@ export class ProductsService {
         price: Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100
       };
 
+      if (size === Size.default) {
+        product.size = this.RandomSize();
+      }
+      else {
+        product.size = size;
+      }
+
       product.stringPrice = product.price.toFixed(2);
 
-      this.getPicsum(Math.floor(Math.random() * 1085)).subscribe(data => {
+      this.getPicsum(Math.floor(Math.random() * 1085), product.size ? product.size : Size.default).subscribe(data => {
         if (data.status === 200) {
           product.image = data.url;
         }
@@ -48,7 +69,7 @@ export class ProductsService {
     });
   }
 
-  ProductArray(amount: number): Product[] {
+  ProductArray(amount: number, size: Size = Size.default): Product[] {
     const output: Product[] = [];
 
     while (amount > 0) {
@@ -59,9 +80,16 @@ export class ProductsService {
           price: Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100
         };
 
+        if (size === Size.default) {
+          product.size = this.RandomSize();
+        }
+        else {
+          product.size = size;
+        }
+
         product.stringPrice = product.price.toFixed(2);
 
-        this.getPicsum(Math.floor(Math.random() * 1085)).subscribe(data => {
+        this.getPicsum(Math.floor(Math.random() * 1085), product.size ? product.size : Size.default).subscribe(data => {
           if (data.status === 200) {
             product.image = data.url;
             output.push(product);
@@ -79,7 +107,7 @@ export class ProductsService {
     return output;
   }
 
-  fillArray(amount: number) {
+  fillArray(amount: number, size: Size = Size.default) {
     this.products.splice(0, this.products.length);
     while (amount > 0) {
       this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").subscribe(data => {
@@ -89,9 +117,16 @@ export class ProductsService {
           price: Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100
         };
 
+        if (size === Size.default) {
+          product.size = this.RandomSize();
+        }
+        else {
+          product.size = size;
+        }
+
         product.stringPrice = product.price.toFixed(2);
 
-        this.getPicsum(Math.floor(Math.random() * 1085)).subscribe(data => {
+        this.getPicsum(Math.floor(Math.random() * 1085), product.size ? product.size : Size.default).subscribe(data => {
           if (data.status === 200) {
             product.image = data.url;
             this.products.push(product);
@@ -111,13 +146,35 @@ export class ProductsService {
     return this.http.get<any>(url, {observe:'body', responseType:'json'});
   }
 
-  private getPicsum(id: number): Observable<any> {
-    let sizes: number[][] = [[500, 400], [500, 750], [500, 500]];
-    let size = sizes[Math.floor(Math.random() * sizes.length)];
-    let width = size[0];
-    let height = size[1];
+  private getPicsum(id: number, size: Size): Observable<any> {
+    let sizes: number[][] = [[500, 400], [500, 500], [500, 750]];
+
+    let width = 0;
+    let height = 0;
+
+    switch (size) {
+      case Size.small:
+        width = sizes[0][0];
+        height = sizes[0][1];
+        break;
+
+      case Size.medium:
+        width = sizes[1][0];
+        height = sizes[1][1];
+        break;
+
+      case Size.large:
+        width = sizes[2][0];
+        height = sizes[2][1];
+        break;
+
+      case Size.default:
+        let size = sizes[Math.floor(Math.random() * sizes.length)];
+        width = size[0];
+        height = size[1];
+        break;
+    }
 
     return this.http.get(`https://picsum.photos/id/${ id }/${ width }/${ height }`, { observe: 'response', responseType: 'text' });
-    //return this.http.get(`https://picsum.photos/id/${id}/500/400`, { observe: 'response', responseType: 'text' });
   }
 }
