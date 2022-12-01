@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, from, map, Observable, of } from 'rxjs';
 
 export interface Product {
   name: string,
@@ -27,6 +27,43 @@ export class ProductsService {
   single = new BehaviorSubject<Product>(this.SingleProduct());
   recommended = new BehaviorSubject<Product[]>(this.ProductArray(15));
   recently = new BehaviorSubject<Product[]>(this.ProductArray(10));
+
+  scroolProduct = of(this.ProductArray(10));
+
+  ExpandProducts = new Observable((observer) => {
+    const output: Product[] = [];
+    let amount = 1;
+
+    while (amount > 0) {
+      this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").subscribe(data => {
+        const product: Product = {
+          name: (data as any).short_sentence,
+          uid: (data as any).uid,
+          price: Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100
+        };
+
+
+        product.size = this.RandomSize();
+
+        product.stringPrice = product.price.toFixed(2);
+
+        this.getPicsum(Math.floor(Math.random() * 1085), product.size ? product.size : Size.default).subscribe(data => {
+          if (data.status === 200) {
+            product.image = data.url;
+            output.push(product);
+          }
+        });
+
+        this.getJSON("https://random-data-api.com/api/users/random_user").subscribe(data => {
+          product.author = `${(data as any).first_name} ${(data as any).last_name}`;
+        });
+      });
+
+      amount--;
+    }
+
+    observer.next(output);
+  });
 
   constructor(private http: HttpClient) {
     this.fillArray(20);

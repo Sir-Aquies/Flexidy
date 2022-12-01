@@ -45,6 +45,7 @@
 
 .products-flex {
   width: 100%;
+  height: fit-content;
 }
 
 .products-columns {

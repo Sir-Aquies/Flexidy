@@ -28,7 +28,11 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
   ngOnInit(): void {
     window.addEventListener('resize', () => {
       this.FlexColumn();
-    }, {signal: this.controller.signal});
+    }, { signal: this.controller.signal });
+
+    window.addEventListener('scroll', () => {
+      this.PopulateList();
+    })
   }
 
   productsCheck() {
@@ -65,12 +69,35 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
     }
   }
 
-  refreshList() {
-    let amount = document.getElementById('product_amount') as HTMLSelectElement;
-    if (amount) {
-      this.storage.fillArray(parseInt(amount.value));
-      this.products = this.storage.products;
+  PopulateList() {
+    const container = document.getElementById("products_flex") as HTMLDivElement;
+    const list = this;
+
+    if (window.scrollY > (container.offsetHeight - container.offsetTop)) {
+
+      const myObserver = {
+        next: (products: any) => {
+          this.products = this.products.concat(products);
+          this.FlexColumn();
+        }
+      };
+
+      this.storage.scroolProduct.subscribe(myObserver);
+
+      for (let i = 0; i < list.columns.length; i++) {
+        
+
+        
+      }
     }
+  }
+
+  refreshList() {
+    //let amount = document.getElementById('product_amount') as HTMLSelectElement;
+    //if (amount) {
+    //  this.storage.fillArray(parseInt(amount.value));
+    //  this.products = this.storage.products;
+    //}
   }
 
   addToCart(product: Product) {
