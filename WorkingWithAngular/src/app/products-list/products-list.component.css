@@ -32,11 +32,11 @@
 }
 
 .normal-slct {
-  padding: 0.5rem 0;
+  padding: 0.5rem;
   height: fit-content;
   width: fit-content; 
   font-family: "Lato", sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: black;
   background-color: transparent;
   border: 1px solid rgba(0, 0, 0, 0.2);

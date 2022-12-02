@@ -53,10 +53,13 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   productsCheck() {
     if (this.products.length !== 0) {
       window.clearInterval(this.load);
+      this.load = 0;
       this.loadCarousel();
     }
     else {
-      this.load = window.setInterval(() => { this.productsCheck() }, 3000);
+      if (this.load == 0) {
+        this.load = window.setInterval(() => { this.productsCheck() }, 3000);
+      }
     }
   }
 

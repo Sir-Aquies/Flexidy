@@ -1,4 +1,6 @@
 import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { data } from 'jquery';
+import { Observable } from 'rxjs';
 import { __values } from 'tslib';
 import { CartService } from '../cart.service';
 import { ProductsService, Product } from '../products.service';
@@ -9,16 +11,18 @@ import { ProductsService, Product } from '../products.service';
   styleUrls: ['./products-list.component.css']
 })
 export class ProductsListComponent implements OnInit, AfterContentInit, OnDestroy {
-  //TODO -  add more products when scrolling down.
   products = this.storage.products;
   columns: Product[][] = []
-  controller = new AbortController();
+  resizeController = new AbortController();
   load = 0;
-
+  scroolController = new AbortController();
   constructor(public cart: CartService, private storage: ProductsService) { }
 
+  //TODO - Put one product per picsum in a database using ADO.net.
+
   ngOnDestroy(): void {
-    this.controller.abort();
+    this.resizeController.abort();
+    this.scroolController.abort();
   }
 
   ngAfterContentInit(): void {
@@ -28,20 +32,23 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
   ngOnInit(): void {
     window.addEventListener('resize', () => {
       this.FlexColumn();
-    }, { signal: this.controller.signal });
+    }, { signal: this.resizeController.signal });
 
     window.addEventListener('scroll', () => {
       this.PopulateList();
-    })
+    },{ signal: this.scroolController.signal })
   }
 
   productsCheck() {
-    if (this.products.length !== 0) {
+    if (this.products.length > 100) {
       clearInterval(this.load);
+      this.load = 0;
       this.FlexColumn();
     }
     else {
-      this.load = window.setInterval(() => { this.productsCheck() }, 5000);
+      if (this.load == 0) {
+        this.load = window.setInterval(() => { this.productsCheck() }, 1000);
+      }
     }
   }
 
@@ -69,35 +76,26 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
     }
   }
 
-  PopulateList() {
+  async PopulateList() {
     const container = document.getElementById("products_flex") as HTMLDivElement;
-    const list = this;
 
-    if (window.scrollY > (container.offsetHeight - container.offsetTop)) {
-
-      const myObserver = {
-        next: (products: any) => {
-          this.products = this.products.concat(products);
-          this.FlexColumn();
-        }
-      };
-
-      this.storage.scroolProduct.subscribe(myObserver);
-
-      for (let i = 0; i < list.columns.length; i++) {
-        
-
-        
+    if (window.scrollY > (container.offsetHeight * (90 / 100))) {
+      for (let i = 0; i < this.columns.length; i++) {
+        let newPr: Product[] = await this.storage.SynchronousProductArray(1);
+        this.storage.products = this.storage.products.concat(newPr);
+        this.columns[i] = this.columns[i].concat(newPr)
       }
     }
   }
 
-  refreshList() {
-    //let amount = document.getElementById('product_amount') as HTMLSelectElement;
-    //if (amount) {
-    //  this.storage.fillArray(parseInt(amount.value));
-    //  this.products = this.storage.products;
-    //}
+  filter() {
+    let size = document.getElementById('product_selector') as HTMLSelectElement;
+    if (size) {
+      this.storage.products = this.storage.ProductArray(300, parseInt(size.value))
+      this.products.splice(0, this.products.length);
+      this.products = this.storage.products;
+      this.productsCheck();
+    }
   }
 
   addToCart(product: Product) {

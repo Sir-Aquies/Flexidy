@@ -24,6 +24,8 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
 
   constructor(private storage: ProductsService, public cart: CartService, private route: ActivatedRoute, @Inject(DOCUMENT) private document: Document) { }
 
+  //TODO - add an animation for expand image.
+
   ngAfterViewInit(): void {
     this.storage.recommended.subscribe((value: Product[]) => { this.recommendations = value });
     this.storage.recently.subscribe((value: Product[]) => { this.recently = value });

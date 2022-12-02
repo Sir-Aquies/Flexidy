@@ -98,6 +98,10 @@
   height: 100%;
 }
 
+.product-info-card > h3 {
+  width: 85%;
+}
+
 .btn-conatiner-card {
   position: absolute;
   top: 5px;

@@ -3,17 +3,12 @@
   <h1>Products</h1>
 
   <div class="confg-container">
-    <button type="button" class="normal-btn" (click)="refreshList()">Refresh</button>
-
-    <label>Items per page:</label>
-    <select class="normal-slct" name="product-amount" id="product_amount" (change)="refreshList()">
-      <option value="10">10</option>
-      <option value="15">15</option>
-      <option value="20" selected>20</option>
-      <option value="25">25</option>
-      <option value="30">30</option>
-      <option value="35">35</option>
-      <option value="40">40</option>
+    <label>Sizes:</label>
+    <select class="normal-slct" name="product-amount" id="product_selector" (change)="filter()">
+      <option value="0" selected>All sizes</option>
+      <option value="1">Small</option>
+      <option value="2">Medium</option>
+      <option value="3">Large</option>
     </select>
   </div>
 
@@ -22,11 +17,6 @@
       <app-singular-product *ngFor="let product of column" product-card [product]="product"
                             [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)"
                             (removeFromCart)="removeFromCart(product)"></app-singular-product>
-      <!--<a *ngFor="let product of column" style="text-decoration: none" [routerLink]="['/product', product.name]">
-    <app-singular-product product-card [product]="product"
-                          [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)"
-                          (removeFromCart)="removeFromCart(product)"></app-singular-product>
-  </a>-->
     </div>
   </div>
 </div>
