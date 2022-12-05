@@ -3,7 +3,7 @@ import { data } from 'jquery';
 import { Observable } from 'rxjs';
 import { __values } from 'tslib';
 import { CartService } from '../cart.service';
-import { ProductsService, Product } from '../products.service';
+import { ProductsService, Product, Size } from '../products.service';
 
 @Component({
   selector: 'app-products-list',
@@ -34,13 +34,13 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
       this.FlexColumn();
     }, { signal: this.resizeController.signal });
 
-    window.addEventListener('scroll', () => {
-      this.PopulateList();
-    },{ signal: this.scroolController.signal })
+    //window.addEventListener('scroll', () => {
+    //  this.PopulateList();
+    //},{ signal: this.scroolController.signal })
   }
 
   productsCheck() {
-    if (this.products.length > 100) {
+    if (this.products.length > 50) {
       clearInterval(this.load);
       this.load = 0;
       this.FlexColumn();
@@ -90,11 +90,23 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
 
   filter() {
     let size = document.getElementById('product_selector') as HTMLSelectElement;
-    if (size) {
-      this.storage.products = this.storage.ProductArray(300, parseInt(size.value))
-      this.products.splice(0, this.products.length);
+
+    if (parseInt(size.value) !== Size.default) {
+      const filteredProducts: Product[] = [];
+
+      for (let i = 0; i < this.storage.products.length; i++) {
+        if (this.storage.products[i].size === parseInt(size.value)) {
+          filteredProducts.push(this.storage.products[i]);
+        }
+      }
+
+      this.products = filteredProducts;
+
+      this.FlexColumn();
+    }
+    else {
       this.products = this.storage.products;
-      this.productsCheck();
+      this.FlexColumn();
     }
   }
 

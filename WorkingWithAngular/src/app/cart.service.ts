@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Product } from './Products';
+import { Product } from './products.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,9 @@ export class CartService {
     let cost = 0;
 
     this.items.forEach(value => {
-      cost += value.price;
+      if (value.price != undefined) {
+        cost += value.price;
+      }
     })
 
     this.totalCost = Math.round((cost + Number.EPSILON) * 100) / 100;

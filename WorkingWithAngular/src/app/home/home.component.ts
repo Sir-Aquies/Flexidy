@@ -8,9 +8,10 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  products = this.storage.ProductArray(6, Size.small);
+  products = this.storage.ProductArray(6);
   id = 0;
-  backgrounds: number[] = [715, 360, 1006, 135, 788, 1031, 466, 62, 992, 1022, 940, 952, 65, 827, 683, 120, 724, 869, 537];
+  backgrounds: number[] = [715, 360, 1006, 135, 788, 1031, 466, 62, 992, 1022, 940, 952, 65, 683, 120, 724, 869];
+  //backgrounds: number[] = [940];
 
 
   //TODO - mini gallery fix images responsive size;
