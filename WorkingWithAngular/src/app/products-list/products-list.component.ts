@@ -19,6 +19,7 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
   constructor(public cart: CartService, private storage: ProductsService) { }
 
   //TODO - Put one product per picsum in a database using ADO.net.
+  //TODO - make filter last after redirections.
 
   ngOnDestroy(): void {
     this.resizeController.abort();
@@ -81,9 +82,9 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
 
     if (window.scrollY > (container.offsetHeight * (90 / 100))) {
       for (let i = 0; i < this.columns.length; i++) {
-        let newPr: Product[] = await this.storage.SynchronousProductArray(1);
-        this.storage.products = this.storage.products.concat(newPr);
-        this.columns[i] = this.columns[i].concat(newPr)
+        //let newPr: Product[] = await this.storage.SynchronousProductArray(1);
+        //this.storage.products = this.storage.products.concat(newPr);
+        //this.columns[i] = this.columns[i].concat(newPr)
       }
     }
   }

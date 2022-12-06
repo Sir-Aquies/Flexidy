@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../cart.service';
 import { ProductsService, Product, Size } from '../products.service';
@@ -10,13 +10,8 @@ import { ProductsService, Product, Size } from '../products.service';
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css']
 })
-export class ProductPageComponent implements OnInit, AfterViewInit {
+export class ProductPageComponent implements OnInit, AfterViewInit, OnDestroy {
   product: Product | undefined;
-  id: number = 0;
-  width = 0;
-  height = 0;
-  expandWidth = 0;
-  expandHeight = 0;
   recommendations: Product[] = [];
   recently: Product[] = [];
   related: Product[] = this.storage.ProductArray(2);
@@ -24,7 +19,9 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
 
   constructor(private storage: ProductsService, public cart: CartService, private route: ActivatedRoute, @Inject(DOCUMENT) private document: Document) { }
 
-  //TODO - add an animation for expand image.
+  ngOnDestroy(): void {
+    this.document.body.style.overflow = 'auto';
+  }
 
   ngAfterViewInit(): void {
     this.storage.recommended.subscribe((value: Product[]) => { this.recommendations = value });
@@ -52,41 +49,20 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
     if (this.product === undefined) {
       this.product = this.storage.recently.value.find(pro => pro.name === productName);
     }
-
-    //TODO - refactor this.
-    if (this.product?.image?.split('/')[4] != undefined) {
-      this.id = parseInt(this.product?.image?.split('/')[4]);
-      switch (this.product.size) {
-        case Size.small:
-          this.width = 800;
-          this.height = 700;
-          this.expandWidth = 1000;
-          this.expandHeight = 900;
-          break;
-
-        case Size.medium:
-          this.width = 800;
-          this.height = 800;
-          this.expandWidth = 950;
-          this.expandHeight = 950;
-          break;
-
-        case Size.large:
-          this.width = 600;
-          this.height = 800;
-          this.expandWidth = 650;
-          this.expandHeight = 950;
-          break;
-      }
-    }
   }
 
   expandImg() {
     const bg = this.document.getElementById('full_size') as HTMLDivElement;
+    const image = this.document.getElementById('expand_image') as HTMLDivElement;
     bg.style.display = 'flex';
     this.document.body.style.overflow = 'hidden';
 
+    window.setTimeout(() => {
+      image.style.transform = 'scale(1, 1)';
+    }, 100)
+
     bg.onclick = () => {
+      image.style.transform = 'scale(0, 0)';
       bg.style.display = 'none';
       this.document.body.style.overflow = 'auto';
     };

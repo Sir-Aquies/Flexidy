@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, from, map, Observable, Observer, of } from 'rxjs';
+import { BehaviorSubject, from, map, Observable, Observer, of, switchMap, tap } from 'rxjs';
 
 export interface Product {
   name?: string,
@@ -34,92 +34,83 @@ export class ProductsService {
   constructor(private http: HttpClient) {
   }
 
-  async SynchronousProductArray(amount: number): Promise<Product[]> {
-    const output: Product[] = [];
-
-    while (amount > 0) {
-      let info = await this.getJSONSync("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum");
-
-      const product: Product = {
-        name: (info as any).short_sentence,
-        uid: (info as any).uid,
-      };
-
-      product.price = Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100;
-      product.stringPrice = product.price.toFixed(2);
-
-      let pic = await this.getJSONSync('https://picsum.photos/id/${Math.floor(Math.random() * 1085)}/info');
-
-      product.image = pic.download_url;
-      product.author = pic.author;
-      product.width = pic.width;
-      product.height = pic.height;
-
-      if (product.width && product.height) {
-        if (product.width > (product.height + 1000)) {
-          product.size = Size.small;
-        }
-        else if (product.height > product.width) {
-          product.size = Size.large;
-        }
-        else if (product.width > product.height) {
-          product.size = Size.medium;
-        }
-      }
-
-      output.push(product);
-      amount--;
-    }
-
-    return output;
-  }
-
-  private getJSONSync(url: string): Promise<any> {
-    return this.http.get<any>(url, { observe: 'body', responseType: 'json' }).toPromise();
-  }
-
   ProductArray(amount: number): Product[] {
     const output: Product[] = [];
 
+    const getProduct = this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").pipe(
+      switchMap(info => {
+        return this.getJSON(`https://picsum.photos/v2/list?page=${ Math.floor(Math.random() * 994) }&limit=1`).pipe(map(data => {
+          const product: Product = {};
+          product.name = (info as any).short_sentence;
+          product.uid = (info as any).uid;
+
+          const [image] = data;
+
+          product.image = image.download_url;
+          product.author = image.author;
+          product.width = image.width;
+          product.height = image.height;
+
+          if (product.width && product.height) {
+            if (product.width > (product.height + 1000)) {
+              product.size = Size.small;
+            }
+            else if (product.height > product.width) {
+              product.size = Size.large;
+            }
+            else if (product.width > product.height) {
+              product.size = Size.medium;
+            }
+          }
+
+          product.price = Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100;
+          product.stringPrice = product.price.toFixed(2);
+
+          return product;
+        }));
+      }));
+
     while (amount > 0) {
-      const product: Product = {};
-
-      this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").subscribe(data => {
-        product.name = (data as any).short_sentence;
-        product.uid = (data as any).uid;
-      });
-
-      product.price = Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100;
-      product.stringPrice = product.price.toFixed(2);
-
-      this.getJSON(`https://picsum.photos/id/${Math.floor(Math.random() * 1085)}/info`).subscribe(data => {
-        product.image = data.download_url;
-        product.author = data.author;
-        product.width = data.width;
-        product.height = data.height;
-
-        if (product.width && product.height) {
-          if (product.width > (product.height + 1000)) {
-            product.size = Size.small;
-          }
-          else if (product.height > product.width) {
-            product.size = Size.large;
-          }
-          else if (product.width > product.height) {
-            product.size = Size.medium;
-          }
-        }
-
+      getProduct.subscribe(product => {
         output.push(product);
-      });
-
+      })
       amount--;
     }
 
     return output;
   }
 
-  private getJSON(url: string): Observable<any> {
+  getJSON(url: string): Observable<any> {
     return this.http.get<any>(url, {observe:'body', responseType:'json'});
   }
 }
+
+//const product: Product = {};
+//this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").subscribe(data => {
+//  product.name = (data as any).short_sentence;
+//  product.uid = (data as any).uid;
+//});
+
+//product.price = Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100;
+//product.stringPrice = product.price.toFixed(2);
+
+//this.getJSON(`https://picsum.photos/id/${Math.floor(Math.random() * 1085)}/info`).subscribe(data => {
+//  product.image = data.download_url;
+//  product.author = data.author;
+//  product.width = data.width;
+//  product.height = data.height;
+
+//  if (product.width && product.height) {
+//    if (product.width > (product.height + 1000)) {
+//      product.size = Size.small;
+//    }
+//    else if (product.height > product.width) {
+//      product.size = Size.large;
+//    }
+//    else if (product.width > product.height) {
+//      product.size = Size.medium;
+//    }
+//  }
+
+//  output.push(product);
+//});
