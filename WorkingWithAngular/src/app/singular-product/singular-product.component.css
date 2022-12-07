@@ -12,6 +12,11 @@
   border-left: none;
   border-right: none;
   border-bottom: none;
+  --fontSize: 1.6rem;
+}
+
+:host-context([cart-product]) .product-image {
+  max-width: 50rem;
 }
 
 :host-context([cart-product]) .product-info {

@@ -23,8 +23,6 @@ section {
 .empty-cart {
   margin: 0 auto;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
   height: fit-content;
   width: 100%;
 }
@@ -95,5 +93,7 @@ section {
 
   .empty-cart {
     width: 30%;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }

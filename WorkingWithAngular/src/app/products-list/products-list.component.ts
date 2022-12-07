@@ -11,19 +11,19 @@ import { ProductsService, Product, Size } from '../products.service';
   styleUrls: ['./products-list.component.css']
 })
 export class ProductsListComponent implements OnInit, AfterContentInit, OnDestroy {
-  products = this.storage.products;
+  products: Product[] = [];
   columns: Product[][] = []
   resizeController = new AbortController();
   load = 0;
-  scroolController = new AbortController();
-  constructor(public cart: CartService, private storage: ProductsService) { }
+  constructor(public cart: CartService, private storage: ProductsService) {
+    this.products = this.storage.products;
+  }
 
   //TODO - Put one product per picsum in a database using ADO.net.
-  //TODO - make filter last after redirections.
+  //TODO - Add products as the user scrolls down.
 
   ngOnDestroy(): void {
     this.resizeController.abort();
-    this.scroolController.abort();
   }
 
   ngAfterContentInit(): void {
@@ -35,14 +35,35 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
       this.FlexColumn();
     }, { signal: this.resizeController.signal });
 
-    //window.addEventListener('scroll', () => {
-    //  this.PopulateList();
-    //},{ signal: this.scroolController.signal })
+    if (sessionStorage.getItem('filter')) {
+      let size = document.getElementById('product_selector') as HTMLSelectElement;
+
+      switch (sessionStorage.getItem('filter')) {
+        case '1':
+          size.value = '1';
+          break;
+        case '2':
+          size.value = '2';
+          break;
+        case '3':
+          size.value = '3';
+          break;
+        default:
+          size.value = '0';
+          break;
+      }
+
+      this.filter();
+    }
   }
 
   productsCheck() {
-    if (this.products.length > 50) {
+    if (this.products.length > 70) {
       clearInterval(this.load);
+
+      const loadingGif = document.getElementById('loading_gif') as HTMLElement;
+      if (loadingGif) loadingGif.style.display = 'none';
+
       this.load = 0;
       this.FlexColumn();
     }
@@ -77,18 +98,6 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
     }
   }
 
-  async PopulateList() {
-    const container = document.getElementById("products_flex") as HTMLDivElement;
-
-    if (window.scrollY > (container.offsetHeight * (90 / 100))) {
-      for (let i = 0; i < this.columns.length; i++) {
-        //let newPr: Product[] = await this.storage.SynchronousProductArray(1);
-        //this.storage.products = this.storage.products.concat(newPr);
-        //this.columns[i] = this.columns[i].concat(newPr)
-      }
-    }
-  }
-
   filter() {
     let size = document.getElementById('product_selector') as HTMLSelectElement;
 
@@ -102,12 +111,15 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
       }
 
       this.products = filteredProducts;
-
       this.FlexColumn();
     }
     else {
       this.products = this.storage.products;
       this.FlexColumn();
+    }
+
+    if (typeof (Storage) !== "undefined") {
+      sessionStorage.setItem('filter', size.value);
     }
   }
 

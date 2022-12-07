@@ -152,7 +152,6 @@ section {
 }
 
 .benefits {
-  width: 95%;
   margin: 4rem auto;
   font-size: 1.1rem;
   text-align: left;
@@ -216,6 +215,7 @@ section {
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 70rem;
   margin: 0 auto;
 }
 
@@ -239,6 +239,7 @@ section {
 
 .product-showcase > img {
   width: 100%;
+  max-width: 25rem;
   border-radius: 0.3rem;
   transition: all 1s;
 }

@@ -12,7 +12,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   id = 0;
   backgrounds: number[] = [715, 360, 1006, 135, 788, 1031, 466, 62, 992, 1022, 940, 952, 683, 120, 724, 869];
   //backgrounds: number[] = [940];
-  //TODO - mini gallery fix images responsive size;
 
   constructor(private storage: ProductsService, @Inject(DOCUMENT) private document: Document) {
   }

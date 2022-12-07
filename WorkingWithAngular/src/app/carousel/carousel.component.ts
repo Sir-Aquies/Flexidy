@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, Inject, Input, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CartService } from '../cart.service';
 import { Product } from '../products.service';
 import { DOCUMENT } from '@angular/common';
@@ -16,8 +16,27 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   currentPage = 0;
   load = 0;
   controller = new AbortController();
+  @ViewChild('loading_gif') gif: ElementRef | undefined;
+  loadingGif: HTMLDivElement | undefined;
 
   constructor(@Inject(DOCUMENT) private document: Document, public cart: CartService) { }
+
+  ngOnDestroy(): void {
+    this.controller.abort();
+  }
+
+  ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    this.productsCheck();
+
+    if (this.gif) this.loadingGif = this.gif.nativeElement;
+
+    window.addEventListener('resize', () => {
+      this.loadCarousel()
+    }, { signal: this.controller.signal });
+  }
 
   loadCarousel() {
     const carousel = this.document.getElementById('carousel') as HTMLDivElement;
@@ -53,6 +72,9 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   productsCheck() {
     if (this.products.length !== 0) {
       window.clearInterval(this.load);
+
+      if (this.loadingGif) this.loadingGif.style.display = 'none';
+
       this.load = 0;
       this.loadCarousel();
     }
@@ -61,21 +83,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
         this.load = window.setInterval(() => { this.productsCheck() }, 3000);
       }
     }
-  }
-
-  ngAfterViewInit(): void {
-    this.productsCheck();
-    window.addEventListener('resize', () => {
-      this.loadCarousel()
-    }, {signal: this.controller.signal});
-  }
-
-  ngOnDestroy(): void {
-    this.controller.abort();
-  }
-
-  ngOnInit(): void {
-    
   }
 
   leftSwipe() {

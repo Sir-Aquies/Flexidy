@@ -43,6 +43,15 @@
   border-radius: 5px;
 }
 
+.loading-gif {
+  margin-top: 10rem;
+  text-align: center;
+}
+
+.loading-gif > img {
+  width: 25rem;
+}
+
 .products-flex {
   width: 100%;
   height: fit-content;

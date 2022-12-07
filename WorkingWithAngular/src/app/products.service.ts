@@ -26,10 +26,8 @@ export enum Size {
 })
 export class ProductsService {
   products: Product[] = this.ProductArray(100);
-  recommended = new BehaviorSubject<Product[]>(this.ProductArray(15));
-  recently = new BehaviorSubject<Product[]>(this.ProductArray(10));
-
-  scroolProduct = of(this.ProductArray(10));
+  recommended = new BehaviorSubject<Product[]>(this.ProductArray(25));
+  recently = new BehaviorSubject<Product[]>(this.ProductArray(25));
 
   constructor(private http: HttpClient) {
   }
@@ -62,6 +60,8 @@ export class ProductsService {
               product.size = Size.medium;
             }
           }
+
+          //TODO - Add a free mode.
 
           product.price = Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100;
           product.stringPrice = product.price.toFixed(2);
