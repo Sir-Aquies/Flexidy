@@ -60,7 +60,7 @@
   display: none;
 }
 
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 770px) {
   :host-context([cart-product]) .price-container {
     display: none;
   }

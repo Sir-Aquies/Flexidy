@@ -36,3 +36,19 @@
 .loading-gif > img {
   width: 10rem;
 }
+
+.loading-container {
+  width: 100%;
+  max-width: 31.25rem;
+  height: 2.3rem;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 1rem;
+}
+
+.loading-bar {
+  width: 0px;
+  height: 100%;
+  background-color: white;
+  border-radius: 1rem;
+}

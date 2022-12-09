@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, from, map, Observable, Observer, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 
 export interface Product {
   name?: string,
@@ -26,10 +26,12 @@ export enum Size {
 })
 export class ProductsService {
   products: Product[] = this.ProductArray(100);
-  recommended = new BehaviorSubject<Product[]>(this.ProductArray(25));
+  recommended = new BehaviorSubject<Product[]>([]);
   recently = new BehaviorSubject<Product[]>(this.ProductArray(25));
+  related = new BehaviorSubject<Product[]>(this.ProductArray(15));
 
   constructor(private http: HttpClient) {
+    this.recommended.next(this.ProductArray(25));
   }
 
   ProductArray(amount: number): Product[] {
@@ -61,14 +63,18 @@ export class ProductsService {
             }
           }
 
-          //TODO - Add a free mode.
-
-          product.price = Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100;
-          product.stringPrice = product.price.toFixed(2);
+          if (Math.floor(Math.random() * 3) == 2) {
+            product.price = 0;
+            product.stringPrice = 'Free';
+          }
+          else {
+            product.price = Math.round(((Math.random() * 100) + Number.EPSILON) * 100) / 100;
+            product.stringPrice = product.price.toFixed(2);
+          }
 
           return product;
         }));
-      }));
+    }));
 
     while (amount > 0) {
       getProduct.subscribe(product => {

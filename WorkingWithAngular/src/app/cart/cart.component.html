@@ -29,7 +29,7 @@
     </div>
   </ng-template>
 
-  <div class="related-section" *ngIf="desktop">
+  <div class="related-section" id="related_section" *ngIf="desktop">
     <h3 style="margin: 0.5rem 0.5rem 0">Related products</h3>
     <div class="vertical-container" vertical-product vertical-container no-buy-button>
       <app-singular-product *ngFor="let product of related" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>

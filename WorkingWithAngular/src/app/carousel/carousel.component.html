@@ -7,6 +7,11 @@
     <div class="loading-gif" #loading_gif>
       <img src="../../assets/loading.gif" alt="loadind gif" />
     </div>
+
+    <!--<div class="loading-container">
+      <div class="loading-bar" #loading_bar></div>
+    </div>-->
+
     <app-singular-product *ngFor="let product of current" [product]="product" [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)" (removeFromCart)="removeFromCart(product)"></app-singular-product>
   </div>
 

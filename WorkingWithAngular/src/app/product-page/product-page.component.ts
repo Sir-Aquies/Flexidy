@@ -49,6 +49,10 @@ export class ProductPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.product === undefined) {
       this.product = this.storage.recently.value.find(pro => pro.name === productName);
     }
+
+    if (this.product === undefined) {
+      this.product = this.storage.related.value.find(pro => pro.name === productName);
+    }
   }
 
   expandImg() {

@@ -19,10 +19,15 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('loading_gif') gif: ElementRef | undefined;
   loadingGif: HTMLDivElement | undefined;
 
-  constructor(@Inject(DOCUMENT) private document: Document, public cart: CartService) { }
+  @ViewChild('loading_bar') bar: ElementRef | undefined;
+  loadingBar: HTMLDivElement | undefined;
+
+  constructor(@Inject(DOCUMENT) private document: Document, public cart: CartService) {
+  }
 
   ngOnDestroy(): void {
-    this.controller.abort();
+    //TODO - fix this.
+    //this.controller.abort();
   }
 
   ngOnInit(): void {
@@ -33,9 +38,31 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.gif) this.loadingGif = this.gif.nativeElement;
 
+    //if (this.bar) this.loadingBar = this.bar.nativeElement;
+
     window.addEventListener('resize', () => {
       this.loadCarousel()
     }, { signal: this.controller.signal });
+  }
+
+  productsCheck() {
+    //let percent = (this.products.length / 25) * 100;
+    //if (this.loadingBar) this.loadingBar.style.width = `${percent}%`;
+
+    if (this.products.length == 25) {
+      window.clearInterval(this.load);
+
+      if (this.loadingGif) this.loadingGif.style.display = 'none';
+      //if (this.loadingBar) if (this.loadingBar.parentElement) this.loadingBar.parentElement.style.display = `none`;
+
+      this.load = 0;
+      this.loadCarousel();
+    }
+    else {
+      if (this.load == 0) {
+        this.load = window.setInterval(() => { this.productsCheck() }, 100);
+      }
+    }
   }
 
   loadCarousel() {
@@ -43,9 +70,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     const width = 300;
     let inicialAmount = Math.round(carousel.offsetWidth / width);
 
-    if (inicialAmount > 2) {
-      inicialAmount--;
-    }
+    if (inicialAmount > 2) inicialAmount--;
 
     let index = 0;
     this.pages = Math.round(this.products.length / inicialAmount);
@@ -53,7 +78,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.productPages.forEach(value => {
       value.splice(0, value.length);
-    })
+    });
     this.productPages.splice(0, this.productPages.length);
 
     for (let i = 0; i < this.pages; i++) {
@@ -67,22 +92,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.current = this.productPages[0];
-  }
-
-  productsCheck() {
-    if (this.products.length !== 0) {
-      window.clearInterval(this.load);
-
-      if (this.loadingGif) this.loadingGif.style.display = 'none';
-
-      this.load = 0;
-      this.loadCarousel();
-    }
-    else {
-      if (this.load == 0) {
-        this.load = window.setInterval(() => { this.productsCheck() }, 3000);
-      }
-    }
   }
 
   leftSwipe() {

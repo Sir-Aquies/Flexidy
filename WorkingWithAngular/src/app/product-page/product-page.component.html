@@ -7,15 +7,20 @@
       <h1 style="margin: 0">{{ product.name }}</h1>
       <div>by {{ product.author }}</div>
 
-      <strong class="price-container">
+      <strong class="price-container" *ngIf="product.price !== 0">
         <span class="other">$</span>
         <span class="price" *ngIf="product.stringPrice !== undefined">{{ product.stringPrice.split(".")[0] }}</span>
         <span class="other" *ngIf="product.stringPrice !== undefined">{{ product.stringPrice.split(".")[1] }}</span>
       </strong>
 
+      <strong class="price-container" *ngIf="product.price == 0">
+        <span class="price" >{{ product.stringPrice  }}</span>
+      </strong>
+
       <button type="button" class="buy-button cart" *ngIf="cart.items.indexOf(product) !== -1" (click)="removeFromCart(product)">Remove from cart</button>
       <button type="button" class="buy-button cart" *ngIf="!(cart.items.indexOf(product) !== -1)" (click)="addToCart(product)">Add to cart</button>
-      <button type="button" class="buy-button" id="buy_button">Buy now</button>
+      <button type="button" *ngIf="product.price !== 0" class="buy-button" id="buy_button">Buy now</button>
+      <button type="button" *ngIf="product.price == 0" class="buy-button" id="buy_button">Free download</button>
     </div>
   </div>
 </section>
