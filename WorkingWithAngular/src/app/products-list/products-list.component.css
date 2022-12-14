@@ -49,7 +49,7 @@
 }
 
 .loading-gif > img {
-  width: 25rem;
+  width: 15rem;
 }
 
 .products-flex {
@@ -60,6 +60,24 @@
 .products-columns {
   width: 100%;
 }
+
+.loading-container {
+  width: 100%;
+  max-width: 50.25rem;
+  margin: 2rem auto 0;
+  height: 2.3rem;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.loading-bar {
+  width: 0px;
+  height: 100%;
+  background-color: var(--primary);
+}
+
 
 @media screen and (min-width: 840px) {
   .products-flex {

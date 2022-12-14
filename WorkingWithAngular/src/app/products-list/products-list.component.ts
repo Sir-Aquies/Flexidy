@@ -1,6 +1,4 @@
-import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { data } from 'jquery';
-import { Observable } from 'rxjs';
+import { AfterContentInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { __values } from 'tslib';
 import { CartService } from '../cart.service';
 import { ProductsService, Product, Size } from '../products.service';
@@ -13,27 +11,33 @@ import { ProductsService, Product, Size } from '../products.service';
 export class ProductsListComponent implements OnInit, AfterContentInit, OnDestroy {
   products: Product[] = [];
   columns: Product[][] = []
-  resizeController = new AbortController();
+  resizeListener: any;
   load = 0;
-  constructor(public cart: CartService, private storage: ProductsService) {
+  @ViewChild('loading_bar') bar: ElementRef | undefined;
+  loadingBar: HTMLDivElement | undefined;
+
+  constructor(public cart: CartService, private storage: ProductsService, private renderer: Renderer2) {
     this.products = this.storage.products;
   }
 
-  //TODO - Put one product per picsum in a database using ADO.net.
+  //TODO - Downgrade the images quiality by 50% so they load faster;
   //TODO - Add products as the user scrolls down.
 
   ngOnDestroy(): void {
-    this.resizeController.abort();
+    this.resizeListener();
   }
 
   ngAfterContentInit(): void {
     this.productsCheck();
+
+    if (this.bar) this.loadingBar = this.bar.nativeElement;
+    this.loadingBar = document.getElementById('loading_bar') as HTMLDivElement;
   }
 
   ngOnInit(): void {
-    window.addEventListener('resize', () => {
-      this.FlexColumn();
-    }, { signal: this.resizeController.signal });
+    this.resizeListener = this.renderer.listen('window', 'resize', () => {
+      this.FlexColumn()
+    });
 
     if (sessionStorage.getItem('filter')) {
       let size = document.getElementById('product_selector') as HTMLSelectElement;
@@ -58,11 +62,15 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
   }
 
   productsCheck() {
-    if (this.products.length > 70) {
+    let percent = (this.products.length / 100) * 100;
+    if (this.loadingBar) this.loadingBar.style.width = `${percent}%`;
+
+    if (this.products.length === 100) {
       clearInterval(this.load);
 
       const loadingGif = document.getElementById('loading_gif') as HTMLElement;
       if (loadingGif) loadingGif.style.display = 'none';
+      if (this.loadingBar) if (this.loadingBar.parentElement) this.loadingBar.parentElement.style.display = `none`;
 
       this.load = 0;
       this.FlexColumn();
@@ -97,11 +105,11 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
       this.columns.push(products);
     }
   }
-
+  //TODO - fix issue here
   filter() {
     let size = document.getElementById('product_selector') as HTMLSelectElement;
 
-    if (parseInt(size.value) !== Size.default) {
+    if (parseInt(size.value) !== Size.default && this.products.length > 0) {
       const filteredProducts: Product[] = [];
 
       for (let i = 0; i < this.storage.products.length; i++) {

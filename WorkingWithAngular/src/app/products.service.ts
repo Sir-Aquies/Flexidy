@@ -28,7 +28,7 @@ export class ProductsService {
   products: Product[] = this.ProductArray(100);
   recommended = new BehaviorSubject<Product[]>([]);
   recently = new BehaviorSubject<Product[]>(this.ProductArray(25));
-  related = new BehaviorSubject<Product[]>(this.ProductArray(15));
+  related = new BehaviorSubject<Product[]>(this.ProductArray(2));
 
   constructor(private http: HttpClient) {
     this.recommended.next(this.ProductArray(25));

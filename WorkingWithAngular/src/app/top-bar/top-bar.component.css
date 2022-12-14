@@ -2,10 +2,10 @@
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: black;
+  background-color: var(--primary);
   z-index: 3;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
-  border-bottom: 1px solid rgba(0,0,0,0.9);
+  /*border-bottom: 1px solid rgba(0,0,0,0.9);*/
 }
 
 nav {
@@ -53,13 +53,13 @@ a {
 .items-amount {
   position: absolute;
   top: 3px;
-  left: 18px;
+  left: 20px;
   right: auto;
-  background-color: black;
+  background-color: var(--primary);
   border-radius: 5px;
   line-height: 0.9;
   text-align: center;
   -webkit-box-pack: center;
-  min-width: 30px;
+  min-width: 27px;
   font-size: 25px;
 }

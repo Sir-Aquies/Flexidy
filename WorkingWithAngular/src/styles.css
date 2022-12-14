@@ -1,6 +1,14 @@
 body {
   margin: 0;
   height: 100%;
+  background-color: white;
+}
+
+:root {
+  --primary: #0E5E6F;
+  --secondary: #3A8891;
+  --tertiary: #f2f2f2;
+  --quaternary: #EAEAEA;
 }
 
 html {

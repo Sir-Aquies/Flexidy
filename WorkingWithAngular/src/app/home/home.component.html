@@ -40,28 +40,27 @@
   </div>
 </section>
 
-<section class="horizontal-gallery">
-  <h3 style="text-align:center">Cras tempor pellentesque risus. Sed dapibus velit, id purus ullamcorper.</h3>
+<section class="mini-gallery">
+  <h3 style="text-align:center; margin-top: 0;">Cras tempor pellentesque risus. Sed dapibus velit, id purus ullamcorper.</h3>
 
-  <div class="image-container">
-    <div class="image-frame">
-      <img src="https://picsum.photos/400/300?random&secId=25" alt="lorem picsum image" />
-      <div>Praesent porta</div>
-    </div>
-    <div class="image-frame">
-      <img src="https://picsum.photos/400/300?random&secId=22" alt="lorem picsum image" />
-      <div>Pellentesque</div>
-    </div>
-    <div class="image-frame">
-      <img src="https://picsum.photos/400/300?random&secId=21" alt="lorem picsum image" />
-      <div>Sed dapibus</div>
+  <div class="product-collection">
+    <div class="product-frame">
+      <div class="product-showcase">
+        <img src="https://picsum.photos/id/628/2509/1673" alt="lorem picsum image" />
+        <p>Quaerat in reprehenderit</p>
+      </div>
+
+      <div class="product-showcase">
+        <img src="https://picsum.photos/id/488/1772/1181" alt="lorem picsum image" />
+        <p>Deserunt unde</p>
+      </div>
+
+      <div class="product-showcase">
+        <img src="https://picsum.photos/id/700/2310/1540" alt="lorem picsum image" />
+        <p>Voluptate quidem</p>
+      </div>
     </div>
   </div>
-
-  <p style="text-align:center">
-    Curabitur efficitur lectus sit amet mi consectetur euismod.
-    Pellentesque ut mauris ac erat viverra fermentum vitae at erat.
-  </p>
 </section>
 
 <section class="benefits">
@@ -74,7 +73,7 @@
 
     <div class="benefits-list">
       <div class="benefits-list-item">
-        <img src="/assets/free-board-sign-icon.svg" alt="free board sign"/>
+        <img src="/assets/free-board-sign-icon.svg" alt="free board sign" />
         <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
       </div>
 
@@ -84,20 +83,21 @@
       </div>
 
       <div class="benefits-list-item">
-        <img src="/assets/piggy-saving-icon.svg"  />
+        <img src="/assets/piggy-saving-icon.svg" />
         <p>Duis ullamcorper ipsum tincidunt velit posuere euismod. Vivamus scelerisque vitae velit ut ultricies.</p>
       </div>
 
       <div class="benefits-list-item">
         <img src="/assets/creative-idea-solution-icon.svg" />
-        <p>Quisque semper sodales est. Morbi rutrum aliquam nulla ut ultricies. Curabitur at nisi laoreet.
+        <p>
+          Quisque semper sodales est. Morbi rutrum aliquam nulla ut ultricies. Curabitur at nisi laoreet.
         </p>
       </div>
     </div>
   </div>
 
   <div class="benefits-image">
-
+    <!--<img src="https://picsum.photos/400/300?random&secId=25" />-->
   </div>
 </section>
 
@@ -106,9 +106,34 @@
   <p style="text-align:center">Vivamus lacinia augue vulputate neque feugiat blandit. Integer eget ligula non nibh tempor vestibulum. Fusce vitae iaculis quam, in iaculis neque.</p>
   <div class="product-collection">
     <div class="product-frame">
-      <div class="product-showcase" *ngFor="let product of products">
-        <img [src]="product.image" alt="lorem picsum image" />
-        <p>{{ product.name }}</p>
+      <div class="product-showcase">
+        <img src="https://picsum.photos/id/1080/5000/3335" alt="lorem picsum image" />
+        <p>Tenetur quis rerum blanditiis</p>
+      </div>
+
+      <div class="product-showcase">
+        <img src="https://picsum.photos/id/633/1818/1228" alt="lorem picsum image" />
+        <p>Et et officia fugiat</p>
+      </div>
+
+      <div class="product-showcase">
+        <img src="https://picsum.photos/id/444/4288/2848" alt="lorem picsum image" />
+        <p>Aut vitae aut harum</p>
+      </div>
+
+      <div class="product-showcase">
+        <img src="https://picsum.photos/id/232/3000/1987" alt="lorem picsum image" />
+        <p>Voluptas expedita vel eos</p>
+      </div>
+
+      <div class="product-showcase">
+        <img src="https://picsum.photos/id/250/4928/3264" alt="lorem picsum image" />
+        <p>Tempora amet sed est.</p>
+      </div>
+
+      <div class="product-showcase">
+        <img src="https://picsum.photos/id/967/4928/3280" alt="lorem picsum image" />
+        <p>Suscipit perspiciatis culpa occaecati.</p>
       </div>
     </div>
   </div>

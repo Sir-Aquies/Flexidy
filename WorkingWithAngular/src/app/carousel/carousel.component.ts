@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, Input, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { CartService } from '../cart.service';
 import { Product } from '../products.service';
 import { DOCUMENT } from '@angular/common';
@@ -15,19 +15,18 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   pages = 0;
   currentPage = 0;
   load = 0;
-  controller = new AbortController();
+  resizeListener: any;
   @ViewChild('loading_gif') gif: ElementRef | undefined;
   loadingGif: HTMLDivElement | undefined;
 
   @ViewChild('loading_bar') bar: ElementRef | undefined;
   loadingBar: HTMLDivElement | undefined;
 
-  constructor(@Inject(DOCUMENT) private document: Document, public cart: CartService) {
+  constructor(@Inject(DOCUMENT) private document: Document, public cart: CartService, private renderer: Renderer2) {
   }
 
   ngOnDestroy(): void {
-    //TODO - fix this.
-    //this.controller.abort();
+    this.resizeListener();
   }
 
   ngOnInit(): void {
@@ -40,9 +39,9 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //if (this.bar) this.loadingBar = this.bar.nativeElement;
 
-    window.addEventListener('resize', () => {
-      this.loadCarousel()
-    }, { signal: this.controller.signal });
+    this.resizeListener = this.renderer.listen('window', 'resize', () => {
+      this.loadCarousel();
+    })
   }
 
   productsCheck() {

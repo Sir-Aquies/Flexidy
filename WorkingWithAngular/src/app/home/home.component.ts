@@ -8,9 +8,8 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  products: Product[] = this.storage.ProductArray(6);
   id = 0;
-  backgrounds: number[] = [715, 360, 1006, 135, 788, 1031, 466, 62, 992, 1022, 940, 952, 683, 120, 724, 869];
+  backgrounds: number[] = [715, 360, 1006, 788, 1031, 466, 62, 992, 1022, 940, 952, 683, 120, 724, 869];
   //backgrounds: number[] = [940];
 
   constructor(private storage: ProductsService, @Inject(DOCUMENT) private document: Document) {
@@ -27,16 +26,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     data.subscribe(data => {
       divImg.style.backgroundImage = `url(${data.download_url})`;
     });
-
-    //let index = 0;
-    //while (this.products.length != 6) {
-
-    //  if (this.storage.products[index].size == Size.small) {
-    //    this.products.push(this.storage.products[index]);
-    //  }
-
-    //  index++;
-    //}
   }
 
 }
