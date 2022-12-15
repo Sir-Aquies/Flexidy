@@ -190,7 +190,7 @@
   font-size: var(--fontSize);
   padding: 0.5rem;
   display: block;
-  background-color: black;
+  background-color: var(--primary);
   color: white;
   cursor: pointer;
   border-radius: 5px;

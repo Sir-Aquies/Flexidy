@@ -46,7 +46,8 @@ section {
 .buy-button {
   padding: 0.5rem;
   display: block;
-  background-color: black;
+  background-color: var(--primary);
+  border: none;
   color: white;
   cursor: pointer;
   font-size: var(--fontSize);

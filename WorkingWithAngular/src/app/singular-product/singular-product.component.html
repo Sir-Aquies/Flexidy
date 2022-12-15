@@ -1,7 +1,7 @@
 <div class="product-container" *ngIf="product != undefined">
   <div class="image-container">
     <a [routerLink]="['/product', product.name]">
-      <img class="product-image" src="{{ product.image }}" />
+      <img class="product-image" src="{{ product.reducedImage }}" />
     </a>
   </div>
   <div class="product-info">

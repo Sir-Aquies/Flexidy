@@ -33,7 +33,7 @@ import { ProductPageComponent } from './product-page/product-page.component';
       { path: "products", component: ProductsListComponent },
       { path: "cart", component: CartComponent },
       { path: 'product/:productName', component: ProductPageComponent }
-    ], { scrollPositionRestoration: 'enabled' })
+    ], { scrollPositionRestoration: 'top' })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,6 +5,7 @@ import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 export interface Product {
   name?: string,
   author?: string,
+  id?: number,
   uid?: string,
   price?: number,
   image?: string,
@@ -12,6 +13,7 @@ export interface Product {
   size?: Size
   width?: number,
   height?: number
+  reducedImage?: string;
 }
 
 export enum Size {
@@ -25,10 +27,12 @@ export enum Size {
   providedIn: 'root'
 })
 export class ProductsService {
-  products: Product[] = this.ProductArray(100);
+  productLength = 100;
+  products: Product[] = this.ProductArray(this.productLength);
   recommended = new BehaviorSubject<Product[]>([]);
   recently = new BehaviorSubject<Product[]>(this.ProductArray(25));
   related = new BehaviorSubject<Product[]>(this.ProductArray(2));
+  sizes: number[][] = [[700, 500], [700, 700], [700, 950]];
 
   constructor(private http: HttpClient) {
     this.recommended.next(this.ProductArray(25));
@@ -50,6 +54,10 @@ export class ProductsService {
           product.author = image.author;
           product.width = image.width;
           product.height = image.height;
+          product.id = image.id;
+
+          let reducedWidth = 0;
+          let reducedHeight = 0;
 
           if (product.width && product.height) {
             if (product.width > (product.height + 1000)) {
@@ -61,7 +69,26 @@ export class ProductsService {
             else if (product.width > product.height) {
               product.size = Size.medium;
             }
+
+            switch (product.size) {
+              case Size.small:
+                reducedWidth = this.sizes[0][0];
+                reducedHeight = this.sizes[0][1];
+                break;
+
+              case Size.medium:
+                reducedWidth = this.sizes[1][0];
+                reducedHeight = this.sizes[1][1];
+                break;
+
+              case Size.large:
+                reducedWidth = this.sizes[2][0];
+                reducedHeight = this.sizes[2][1];
+                break;
+            }
           }
+
+          product.reducedImage = `https://picsum.photos/id/${product.id}/${reducedWidth}/${reducedHeight}`;
 
           if (Math.floor(Math.random() * 3) == 2) {
             product.price = 0;

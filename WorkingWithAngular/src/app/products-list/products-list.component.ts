@@ -12,32 +12,24 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
   products: Product[] = [];
   columns: Product[][] = []
   resizeListener: any;
+  scroolListener: any;
   load = 0;
-  @ViewChild('loading_bar') bar: ElementRef | undefined;
   loadingBar: HTMLDivElement | undefined;
+  loadingProducts = false;
 
   constructor(public cart: CartService, private storage: ProductsService, private renderer: Renderer2) {
-    this.products = this.storage.products;
   }
 
-  //TODO - Downgrade the images quiality by 50% so they load faster;
-  //TODO - Add products as the user scrolls down.
-
   ngOnDestroy(): void {
-    this.resizeListener();
+    if (this.resizeListener) this.resizeListener();
+    if (this, this.scroolListener) this.scroolListener();
+    clearInterval(this.load);
   }
 
   ngAfterContentInit(): void {
-    this.productsCheck();
-
-    if (this.bar) this.loadingBar = this.bar.nativeElement;
     this.loadingBar = document.getElementById('loading_bar') as HTMLDivElement;
-  }
 
-  ngOnInit(): void {
-    this.resizeListener = this.renderer.listen('window', 'resize', () => {
-      this.FlexColumn()
-    });
+    this.productsCheck();
 
     if (sessionStorage.getItem('filter')) {
       let size = document.getElementById('product_selector') as HTMLSelectElement;
@@ -61,23 +53,37 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
     }
   }
 
+  ngOnInit(): void {
+    this.products = this.storage.products;
+  }
+
   productsCheck() {
-    let percent = (this.products.length / 100) * 100;
+    let percent = (this.products.length / this.storage.productLength) * 100;
     if (this.loadingBar) this.loadingBar.style.width = `${percent}%`;
 
-    if (this.products.length === 100) {
+    if (this.products.length === this.storage.productLength) {
       clearInterval(this.load);
+
+      this.resizeListener = this.renderer.listen('window', 'resize', () => {
+        this.FlexColumn()
+      });
+
+      this.scroolListener = this.renderer.listen('window', 'scroll', () => {
+        this.expandProducts();
+      });
 
       const loadingGif = document.getElementById('loading_gif') as HTMLElement;
       if (loadingGif) loadingGif.style.display = 'none';
       if (this.loadingBar) if (this.loadingBar.parentElement) this.loadingBar.parentElement.style.display = `none`;
 
+      (document.getElementById('product_selector') as HTMLSelectElement).disabled = false;
+
       this.load = 0;
-      this.FlexColumn();
+      this.filter();
     }
     else {
       if (this.load == 0) {
-        this.load = window.setInterval(() => { this.productsCheck() }, 1000);
+        this.load = window.setInterval(() => { this.productsCheck() }, 100);
       }
     }
   }
@@ -105,11 +111,11 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
       this.columns.push(products);
     }
   }
-  //TODO - fix issue here
+
   filter() {
     let size = document.getElementById('product_selector') as HTMLSelectElement;
 
-    if (parseInt(size.value) !== Size.default && this.products.length > 0) {
+    if (parseInt(size.value) !== Size.default) {
       const filteredProducts: Product[] = [];
 
       for (let i = 0; i < this.storage.products.length; i++) {
@@ -128,6 +134,36 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
 
     if (typeof (Storage) !== "undefined") {
       sessionStorage.setItem('filter', size.value);
+    }
+  }
+
+  expandProducts() {
+    const container = document.getElementById("products_flex") as HTMLDivElement;
+    let expandAmount = 15;
+    if (this.loadingProducts) return;
+    let last = 0;
+
+    if (window.scrollY > (container.offsetHeight * (70 / 100))) {
+      this.loadingProducts = true;
+
+      for (let i = 0; i < this.columns.length; i++) {
+        const productArr = this.storage.ProductArray(expandAmount);
+
+        let timer = window.setInterval(() => {
+          if (productArr.length === expandAmount) {
+            this.columns[i] = this.columns[i].concat(productArr);
+            this.storage.products = this.storage.products.concat(productArr)
+            this.products = this.storage.products;
+
+            window.clearInterval(timer);
+            last++;
+
+            if (last === this.columns.length) {
+              this.loadingProducts = false;
+            }
+          }
+        }, 100);
+      }
     }
   }
 
