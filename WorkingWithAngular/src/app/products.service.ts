@@ -29,13 +29,12 @@ export enum Size {
 export class ProductsService {
   productLength = 100;
   products: Product[] = this.ProductArray(this.productLength);
-  recommended = new BehaviorSubject<Product[]>([]);
+  recommended = new BehaviorSubject<Product[]>(this.ProductArray(25));
   recently = new BehaviorSubject<Product[]>(this.ProductArray(25));
   related = new BehaviorSubject<Product[]>(this.ProductArray(2));
   sizes: number[][] = [[700, 500], [700, 700], [700, 950]];
 
   constructor(private http: HttpClient) {
-    this.recommended.next(this.ProductArray(25));
   }
 
   ProductArray(amount: number): Product[] {

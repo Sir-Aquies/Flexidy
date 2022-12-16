@@ -19,7 +19,8 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
 
   constructor(public cart: CartService, private storage: ProductsService, private renderer: Renderer2) {
   }
-
+  //TODO - fix the scroll position restauration problem.
+  //TODO - Add a price filter
   ngOnDestroy(): void {
     if (this.resizeListener) this.resizeListener();
     if (this, this.scroolListener) this.scroolListener();
@@ -28,8 +29,6 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
 
   ngAfterContentInit(): void {
     this.loadingBar = document.getElementById('loading_bar') as HTMLDivElement;
-
-    this.productsCheck();
 
     if (sessionStorage.getItem('filter')) {
       let size = document.getElementById('product_selector') as HTMLSelectElement;
@@ -48,9 +47,9 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
           size.value = '0';
           break;
       }
-
-      this.filter();
     }
+
+    this.productsCheck();
   }
 
   ngOnInit(): void {
@@ -139,31 +138,30 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
 
   expandProducts() {
     const container = document.getElementById("products_flex") as HTMLDivElement;
-    let expandAmount = 15;
+    let expandAmount = 5 * this.columns.length;
     if (this.loadingProducts) return;
-    let last = 0;
 
-    if (window.scrollY > (container.offsetHeight * (70 / 100))) {
+    if (window.scrollY > (container.offsetHeight * (65 / 100))) {
       this.loadingProducts = true;
 
-      for (let i = 0; i < this.columns.length; i++) {
-        const productArr = this.storage.ProductArray(expandAmount);
+      const productArr = this.storage.ProductArray(expandAmount);
 
-        let timer = window.setInterval(() => {
-          if (productArr.length === expandAmount) {
-            this.columns[i] = this.columns[i].concat(productArr);
-            this.storage.products = this.storage.products.concat(productArr)
-            this.products = this.storage.products;
+      let timer = window.setInterval(() => {
+        if (productArr.length === expandAmount) {
+          let index = 0;
+          for (let i = 0; i < productArr.length; i++) {
+            this.columns[index++].push(productArr[i]);
 
-            window.clearInterval(timer);
-            last++;
+            if (index === this.columns.length) index = 0;
+          }
 
-            if (last === this.columns.length) {
-              this.loadingProducts = false;
-            }
+          this.storage.products = this.storage.products.concat(productArr)
+          this.products = this.storage.products;
+
+          window.clearInterval(timer);
+          this.loadingProducts = false;
           }
         }, 100);
-      }
     }
   }
 
