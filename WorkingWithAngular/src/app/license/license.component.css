@@ -1,0 +1,98 @@
+section {
+  width: 100%;
+  margin: 2rem 0;
+  font-family: "Lato", sans-serif;
+  font-size: 1.4rem;
+  color: rgba(0,0,0,0.8);
+  line-height: 1.4;
+  text-align: justify;
+  padding: 0 0.5rem;
+}
+
+.header-container {
+  max-width: 70rem;
+  margin: 0 auto;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.allowance-container {
+  display: flex;
+  gap: 1rem;
+  line-height: 1.6;
+  max-width: 90rem;
+  margin: 4rem auto;
+}
+
+.allowance-container h1 {
+  text-align: center;
+}
+
+.allowance-container > div {
+  width: 50%;
+  background-color: var(--tertiary);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.allow-list {
+  list-style-type: none;
+}
+
+.allow-list > li {
+  padding-left: 2.2rem;
+  background-image: url(../../assets/tick-icon.svg);
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 25px;
+}
+
+.not-allow-list {
+  list-style-type: none;
+}
+
+.not-allow-list > li {
+  padding-left: 2.2rem; 
+  background-image: url(../../assets/ban-sign-line-icon.svg);
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 25px;
+}
+
+.design-container {
+  max-width: 90rem;
+  margin: 0 auto;
+  border-radius: 1.7rem;
+  overflow: hidden;
+}
+
+.text-image-design {
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.image-design {
+  width: 50%;
+  height: auto;
+}
+
+.text-design {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+.text-design h1 {
+  margin: 0;
+  line-height: 1;
+  font-size: 2.5rem;
+}
+
+.text-design p {
+  margin: 1rem auto;
+  width: 80%;
+}

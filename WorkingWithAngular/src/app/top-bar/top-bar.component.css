@@ -25,7 +25,8 @@ nav {
 
 .link-list {
   display: flex;
-  padding: 0 1.3rem;
+  gap: 0.7rem;
+  padding: 0 1.1rem;
   align-items: center;
   justify-content: start;
   width: 100%;

@@ -19,8 +19,8 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
 
   constructor(public cart: CartService, private storage: ProductsService, private renderer: Renderer2) {
   }
-  //TODO - fix the scroll position restauration problem.
   //TODO - Add a price filter
+  //TODO - Add a filter to expandImages
   ngOnDestroy(): void {
     if (this.resizeListener) this.resizeListener();
     if (this, this.scroolListener) this.scroolListener();

@@ -3,16 +3,16 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 
 export interface Product {
-  name?: string,
-  author?: string,
-  id?: number,
-  uid?: string,
+  name: string,
+  author: string,
+  id: number,
+  uid: string,
+  image: string,
   price?: number,
-  image?: string,
   stringPrice?: string
   size?: Size
-  width?: number,
-  height?: number
+  width: number,
+  height: number
   reducedImage?: string;
 }
 
@@ -42,18 +42,18 @@ export class ProductsService {
 
     const getProduct = this.getJSON("https://random-data-api.com/api/lorem_ipsum/random_lorem_ipsum").pipe(
       switchMap(info => {
-        return this.getJSON(`https://picsum.photos/v2/list?page=${ Math.floor(Math.random() * 994) }&limit=1`).pipe(map(data => {
-          const product: Product = {};
-          product.name = (info as any).short_sentence;
-          product.uid = (info as any).uid;
-
+        return this.getJSON(`https://picsum.photos/v2/list?page=${Math.floor(Math.random() * 994)}&limit=1`).pipe(map(data => {
           const [image] = data;
 
-          product.image = image.download_url;
-          product.author = image.author;
-          product.width = image.width;
-          product.height = image.height;
-          product.id = image.id;
+          const product: Product = {
+            name: (info as any).short_sentence,
+            uid: (info as any).uid,
+            id: image.id,
+            image: image.download_url,
+            author: image.author,
+            width: image.width,
+            height: image.height,
+          };
 
           let reducedWidth = 0;
           let reducedHeight = 0;

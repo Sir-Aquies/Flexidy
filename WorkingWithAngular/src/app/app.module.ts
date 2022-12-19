@@ -13,6 +13,7 @@ import { SingularProductComponent } from './singular-product/singular-product.co
 import { CarouselComponent } from './carousel/carousel.component';
 import { FooterComponent } from './footer/footer.component';
 import { ProductPageComponent } from './product-page/product-page.component';
+import { LicenseComponent } from './license/license.component';
 
 @NgModule({
   declarations: [
@@ -25,15 +26,17 @@ import { ProductPageComponent } from './product-page/product-page.component';
     CarouselComponent,
     FooterComponent,
     ProductPageComponent,
+    LicenseComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, AppRoutingModule,
     RouterModule.forRoot([
-      { path: "", component: HomeComponent },
-      { path: "products", component: ProductsListComponent },
-      { path: "cart", component: CartComponent },
-      { path: 'product/:productName', component: ProductPageComponent }
-    ], { scrollPositionRestoration: 'top' })
+      { path: '', component: HomeComponent },
+      { path: 'products', component: ProductsListComponent },
+      { path: 'cart', component: CartComponent },
+      { path: 'product/:productName', component: ProductPageComponent },
+      { path: 'license', component: LicenseComponent}
+    ], { scrollPositionRestoration: 'enabled' })
   ],
   providers: [],
   bootstrap: [AppComponent]

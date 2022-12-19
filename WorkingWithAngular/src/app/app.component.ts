@@ -7,7 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'WorkingWithAngular';
-
+  //TODO - create license page
+  //TODO - create an explore page
+  //TODO - fix the scroll position restauration problem.
+  //TODO -  Add a way to buy images or get a subscription (not real money).
   onActivate() {
     window.scroll({
       top: 0,

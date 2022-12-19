@@ -5,6 +5,7 @@
     </div>
     <div class="product-info">
       <h1 style="margin: 0">{{ product.name }}</h1>
+      <div>{{ product.image }}</div>
       <div>by {{ product.author }}</div>
 
       <strong class="price-container" *ngIf="product.price !== 0">

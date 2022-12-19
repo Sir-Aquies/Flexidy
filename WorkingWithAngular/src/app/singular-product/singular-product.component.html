@@ -21,7 +21,7 @@
     <button type="button" class="buy-button cart" *ngIf="onCart" (click)="removeFromCart.emit()">Remove from cart</button>
     <button type="button" class="buy-button cart" *ngIf="!onCart" (click)="addToCart.emit()">Add to cart</button>
     <button type="button" *ngIf="product.price == 0" class="buy-button" id="buy_button">Free download</button>
-    <button type="button" *ngIf="product.price !== 0" class="buy-button" id="buy_button">Buy now</button>
+    <button type="button" *ngIf="product.price !== 0" class="buy-button" id="buy_button">Buy download</button>
   </div>
 
   <div class="card-container">
