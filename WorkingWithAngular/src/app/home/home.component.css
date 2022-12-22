@@ -77,13 +77,18 @@ section {
 
 .products-ad {
   background-color: var(--primary);
+  background-image: url(https://picsum.photos/id/959/3699/2466);
+  background-position-y: 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: white;
   border-radius: 0.3rem;
-  padding: 1rem;
+  /*padding: 1rem;*/
 }
 
 .products-ad-text {
   font-size: 1rem;
+  padding: 1rem 0 1rem 1rem;
 }
 
 .products-ad-text > * {
@@ -112,6 +117,11 @@ section {
 }
 
 .products-ad-image {
+  /*background-image: url(https://picsum.photos/id/959/3699/2466);
+  background-position: -20px -60px;
+  background-repeat: no-repeat;
+  background-size: 460px;
+  padding-right: 1rem;*/
 }
 
 @media screen and (min-width: 840px) {
@@ -159,6 +169,7 @@ section {
 
 .benefits-image {
   width: 100%;
+  display: none;
   position: relative;
 }
 
@@ -248,6 +259,7 @@ section {
 
   .benefits-image {
     width: 50%;
+    display: block;
     height: 100%;
   }
 }

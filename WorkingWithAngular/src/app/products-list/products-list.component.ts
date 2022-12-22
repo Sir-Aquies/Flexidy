@@ -19,8 +19,7 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
 
   constructor(public cart: CartService, private storage: ProductsService, private renderer: Renderer2) {
   }
-  //TODO - Add a price filter
-  //TODO - Add a filter to expandImages
+  //TODO - Add a price filter (for free).
   ngOnDestroy(): void {
     if (this.resizeListener) this.resizeListener();
     if (this, this.scroolListener) this.scroolListener();
@@ -60,7 +59,7 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
     let percent = (this.products.length / this.storage.productLength) * 100;
     if (this.loadingBar) this.loadingBar.style.width = `${percent}%`;
 
-    if (this.products.length === this.storage.productLength) {
+    if (this.products.length >= this.storage.productLength) {
       clearInterval(this.load);
 
       this.resizeListener = this.renderer.listen('window', 'resize', () => {
@@ -137,6 +136,7 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
   }
 
   expandProducts() {
+    let size = document.getElementById('product_selector') as HTMLSelectElement;
     const container = document.getElementById("products_flex") as HTMLDivElement;
     let expandAmount = 5 * this.columns.length;
     if (this.loadingProducts) return;
@@ -144,7 +144,7 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
     if (window.scrollY > (container.offsetHeight * (65 / 100))) {
       this.loadingProducts = true;
 
-      const productArr = this.storage.ProductArray(expandAmount);
+      const productArr = this.storage.productArraySetSize(expandAmount, parseInt(size.value));
 
       let timer = window.setInterval(() => {
         if (productArr.length === expandAmount) {

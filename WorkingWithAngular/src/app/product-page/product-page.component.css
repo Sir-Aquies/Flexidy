@@ -56,8 +56,9 @@ section {
 
 .cart {
   background-color: white;
-  color: black;
-  border: 1px solid black;
+  color: var(--primary);
+  font-weight: bold;
+  border: 3px solid var(--primary);
   margin: 0.5rem 0;
 }
 

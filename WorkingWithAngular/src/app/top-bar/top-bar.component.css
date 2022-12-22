@@ -5,7 +5,8 @@
   background-color: var(--primary);
   z-index: 3;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
-  /*border-bottom: 1px solid rgba(0,0,0,0.9);*/
+  transition: background-color 500ms;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 nav {
@@ -26,10 +27,13 @@ nav {
 .link-list {
   display: flex;
   gap: 0.7rem;
-  padding: 0 1.1rem;
   align-items: center;
-  justify-content: start;
+  justify-content: end;
   width: 100%;
+}
+
+.link-list > :not(.mobile){
+  display: none;
 }
 
 a {
@@ -39,7 +43,6 @@ a {
 
 .shopping-cart {
   display: flex;
-  margin-left: auto;
   position: relative;
   align-items: center;
 }
@@ -63,4 +66,54 @@ a {
   -webkit-box-pack: center;
   min-width: 27px;
   font-size: 25px;
+  transition: background-color 500ms;
+}
+
+.mobile-links-button {
+  width: 2rem;
+  height: 2rem;
+  background: url(../../assets/hamburger-menu-icon.svg) no-repeat center;
+  background-size: contain;
+  position: relative;
+}
+
+.mobile-navigation-bar {
+  z-index: 2;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  padding: 4.5rem 1rem;
+  background-color: var(--primary);
+  color: white;
+  font-family: "Lato", sans-serif;
+  font-size: 26px;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: left 500ms;
+}
+
+@media screen and (min-width: 540px) {
+  .link-list {
+    justify-content: start;
+    padding: 0 1rem;
+  }
+
+  .link-list > :not(.mobile) {
+    display: block;
+  }
+
+  .shopping-cart {
+    margin-left: auto;
+  }
+
+  .mobile-navigation-bar {
+    display: none;
+  }
+
+  .mobile-links-button {
+    display: none;
+  }
 }

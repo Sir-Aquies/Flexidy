@@ -1,4 +1,4 @@
-<header class="top-bar">
+<header class="top-bar" id="top-bar">
   <nav>
     <div class="logo">
       <a routerLink="/">Flexidy</a>
@@ -8,11 +8,22 @@
       <a routerLink="/products">Products</a>
       <a routerLink="/explore">Explore</a>
       <a routerLink="/license">License</a>
-      <a routerLink="/cart" class="shopping-cart">
+
+      <a routerLink="/cart" class="shopping-cart mobile">
         <img src="/assets/shopping-cart-icon.svg" alt="cart-svg" />
-        <span class="items-amount">{{ itemsAmount }}</span>
+        <span class="items-amount" id="cart-items">{{ itemsAmount }}</span>
       </a>
+
+      <div class="mobile-links-button mobile" (click)="showMobileNav()" onclick="event.stopPropagation()"></div>
     </div>
+
   </nav>
 </header>
 
+<div class="mobile-navigation-bar" id="mobile-navigation-bar">
+  <a routerLink="/">Home</a>
+  <a routerLink="/products">Products</a>
+  <a routerLink="/explore">Explore</a>
+  <a routerLink="/license">License</a>
+  <a routerLink="/cart">Cart ({{ itemsAmount }})</a>
+</div>

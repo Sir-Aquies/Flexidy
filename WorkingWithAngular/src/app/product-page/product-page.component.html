@@ -20,7 +20,7 @@
 
       <button type="button" class="buy-button cart" *ngIf="cart.items.indexOf(product) !== -1" (click)="removeFromCart(product)">Remove from cart</button>
       <button type="button" class="buy-button cart" *ngIf="!(cart.items.indexOf(product) !== -1)" (click)="addToCart(product)">Add to cart</button>
-      <button type="button" *ngIf="product.price !== 0" class="buy-button" id="buy_button">Buy now</button>
+      <button type="button" *ngIf="product.price !== 0" class="buy-button" id="buy_button">Buy download</button>
       <button type="button" *ngIf="product.price == 0" class="buy-button" id="buy_button">Free download</button>
     </div>
   </div>

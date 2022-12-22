@@ -11,14 +11,13 @@ section {
 
 .header-container {
   max-width: 70rem;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
   padding: 1.5rem 0;
 }
 
 .allowance-container {
-  display: flex;
-  gap: 1rem;
   line-height: 1.6;
   max-width: 90rem;
   margin: 4rem auto;
@@ -29,32 +28,37 @@ section {
 }
 
 .allowance-container > div {
-  width: 50%;
+  width: 100%;
   background-color: var(--tertiary);
   border-radius: 1rem;
   padding: 1rem;
+  margin: 0.7rem auto;
 }
 
 .allow-list {
   list-style-type: none;
+  text-align: left;
+  padding: 0;
 }
 
 .allow-list > li {
   padding-left: 2.2rem;
   background-image: url(../../assets/tick-icon.svg);
-  background-position: left;
+  background-position: left 8px;
   background-repeat: no-repeat;
   background-size: 25px;
 }
 
 .not-allow-list {
   list-style-type: none;
+  text-align: left;
+  padding: 0;
 }
 
 .not-allow-list > li {
   padding-left: 2.2rem; 
   background-image: url(../../assets/ban-sign-line-icon.svg);
-  background-position: left;
+  background-position: left 5px;
   background-repeat: no-repeat;
   background-size: 25px;
 }
@@ -63,17 +67,17 @@ section {
   max-width: 90rem;
   margin: 0 auto;
   border-radius: 1.7rem;
+  box-shadow: 0 0 10px 2px rgba(0,0,0,0.4);
   overflow: hidden;
 }
 
 .text-image-design {
-  display: flex;
   margin: 0 auto;
   width: 100%;
 }
 
 .image-design {
-  width: 50%;
+  width: 100%;
   height: auto;
 }
 
@@ -95,4 +99,36 @@ section {
 .text-design p {
   margin: 1rem auto;
   width: 80%;
+}
+
+@media screen and (min-width: 720px) {
+  .allowance-container {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .allowance-container > div {
+    width: 50%;
+  }
+
+  .allow-list {
+    padding-left: 0.7rem;
+  }
+
+  .not-allow-list {
+    padding-left: 0.7rem;
+  }
+
+  .text-image-design {
+    display: flex;
+  }
+
+  .text-image-design-invert {
+    flex-direction: row-reverse;
+  }
+
+  .image-design {
+    width: 50%;
+    height: auto;
+  }
 }
