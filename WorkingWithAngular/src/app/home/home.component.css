@@ -76,19 +76,19 @@ section {
 }
 
 .products-ad {
-  background-color: var(--primary);
-  background-image: url(https://picsum.photos/id/959/3699/2466);
-  background-position-y: 0px;
+  background-image: url(https://picsum.photos/id/537/2291/3450);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-position-x: center;
+  background-size: auto;
   color: white;
-  border-radius: 0.3rem;
-  /*padding: 1rem;*/
+  border-radius: 0.2rem;
+  transition: background-position 25s ease-in-out;
+  padding: 1.5rem;
 }
 
 .products-ad-text {
-  font-size: 1rem;
-  padding: 1rem 0 1rem 1rem;
+  font-size: 1.3rem;
+  text-align: center;
 }
 
 .products-ad-text > * {
@@ -109,19 +109,12 @@ section {
 .products-ad-link a {
   border-radius: 1rem;
   background-color: var(--primary);
+  font-size: 1.6rem;
   text-decoration: none;
   border: 1px solid white;
   color: white;
-  padding: 0.7rem 2.5rem;
+  padding: 0.7rem 2rem;
   white-space: nowrap;
-}
-
-.products-ad-image {
-  /*background-image: url(https://picsum.photos/id/959/3699/2466);
-  background-position: -20px -60px;
-  background-repeat: no-repeat;
-  background-size: 460px;
-  padding-right: 1rem;*/
 }
 
 @media screen and (min-width: 840px) {
@@ -139,19 +132,20 @@ section {
 
 .benefits {
   margin: 4rem auto;
-  font-size: 1.1rem;
-  text-align: left;
+  max-width: 80rem;
 }
 
 .benefits-text {
   width: 100%;
+  font-size: 1.1rem;
+  text-align: left;
 }
 
 .benefits-text > * {
   margin: 0;
 }
 
-.benefits-list {
+.benefits-list { 
   display: flex;
   flex-direction: column;
 }
@@ -169,87 +163,57 @@ section {
 
 .benefits-image {
   width: 100%;
-  display: none;
+  height: 600px;
   position: relative;
 }
 
-.image-design {
+.design-container {
   display: flex;
-  width: 100%;
-  height: 600px;
   position: relative;
+  width: 100%;
+  height: 100%;
   perspective: 100px;
   perspective-origin: right;
 }
 
-.image-design > div {
-  position: absolute;
+.design-container > div {
   transform: rotateY(-2deg);
   transform-style: preserve-3d;
   transition: transform 1s;
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   border-radius: 0.3rem;
+  position: relative;
+  width: 100%;
 }
 
-.image-design > div:hover {
+.design-container > div:hover {
   transform: rotateY(0deg);
 }
 
-.upper-design {
-  top: 0;
-  left: 30px;
-  width: 21rem;
-  height: 15rem;
+.left {
+  background-position: -440px center;
+  background-color: red;
+  background-size: 910px;
   background-image: url(https://picsum.photos/id/996/4272/2848);
-  box-shadow: 10px -10px var(--secondary),-10px 10px var(--secondary);
 }
 
-.left-design {
-  top: 0;
-  left: 400px;
-  width: 20rem;
-  height: 100%;
-  background-image: url(https://picsum.photos/id/195/768/1024);
-  box-shadow: 10px 10px var(--secondary), -10px -10px var(--secondary);
-}
-
-.overlap-design {
-  left: 10px;
-  top: 270px;
-  width: 23.5rem;
-  height: 18.75rem;
-  background-color: var(--secondary);
-}
-
-.overlap-design > div {
-  position: absolute;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  border-radius: 0.3rem;
-}
-
-.overlapped-design {
-  top: 0.5rem;
-  left: 0.5rem;
-  width: 19rem;
-  height: 17rem;
-  background-image: url(https://picsum.photos/id/43/1280/831);
-}
-
-.overlapping-design {
-  top: 1.25rem;
-  left: 4rem;
-  width: 19rem;
-  height: 17rem;
+.center {
+  background-position: -450px center;
+  background-color: green;
+  background-size: 910px;
   background-image: url(https://picsum.photos/id/82/1500/997);
+}
+
+.right {
+  background-position: center;
+  background-color: blue;
+  background-size: cover;
+  background-image: url(https://picsum.photos/id/195/768/1024);
 }
 
 @media screen and (min-width: 840px) {
   .benefits {
-    width: 60%;
+    /*width: 60%;*/
     display: flex;
   }
 
@@ -259,8 +223,14 @@ section {
 
   .benefits-image {
     width: 50%;
-    display: block;
-    height: 100%;
+  }
+
+  .left {
+    background-position: -375px center;
+  }
+
+  .center {
+    background-position: -420px center;
   }
 }
 
@@ -287,7 +257,7 @@ section {
   padding: 0.5rem;
 }
 
-.product-showcase > * {
+.product-showcase-text {
   margin: 0;
   line-height: normal;
   font-size: 1.1rem;
@@ -306,8 +276,32 @@ section {
   transform: scale(1.05, 1.05);
 }
 
-.full-width > .product-showcase {
+.separated {
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.framed {
   width: 100%;
+  background-color: white;
+  border-radius: 0.25rem;
+  padding: 0.7rem;
+}
+
+.framed > img {
+  margin: 0 auto;
+  display: block;
+}
+
+.framed > h1 {
+  margin: 0;
+  text-align: center;
+}
+
+.framed > p {
+  text-align: left;
+  margin: 0.7rem 0;
+  font-size: 1.2rem;
 }
 
 @media screen and (min-width: 840px) {
@@ -315,15 +309,15 @@ section {
     padding: 2.5rem;
   }
 
-  .product-collection {
-    width: 80%;
-  }
-
   .product-showcase {
     width: 33.33%;
   }
 
-  .full-width > .product-showcase {
+  .separated {
+    flex-direction: initial;
+  }
+
+  .framed {
     width: 33.33%;
   }
 }

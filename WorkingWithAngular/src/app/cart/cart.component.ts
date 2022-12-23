@@ -18,8 +18,6 @@ export class CartComponent implements OnInit, AfterViewInit, OnDestroy {
   slideIndex = 0;
   clearSlide = 0;
   desktop = false;
-  
-  //TODO - Slide related products with new ones.
 
   constructor(public cart: CartService, private storage: ProductsService, @Inject(DOCUMENT) private document: Document) {
   }
