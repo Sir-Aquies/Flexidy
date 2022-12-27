@@ -4,7 +4,7 @@
 
   <div class="confg-container">
     <label>Sizes:</label>
-    <select class="normal-slct" name="product-amount" id="product_selector" (change)="filter()" disabled>
+    <select class="normal-slct" name="product-amount" id="product_selector" (change)="FilterProducts()" disabled>
       <option value="0" selected>All sizes</option>
       <option value="1">Small</option>
       <option value="2">Medium</option>
@@ -15,8 +15,8 @@
   <div id="products_flex" class="products-flex">
     <div *ngFor="let column of columns" class="products-columns">
       <app-singular-product *ngFor="let product of column" product-card [product]="product"
-                            [onCart]="cart.items.indexOf(product) !== -1" (addToCart)="addToCart(product)"
-                            (removeFromCart)="removeFromCart(product)"></app-singular-product>
+                            [onCart]="cart.items.indexOf(product) !== -1" (anchorClicked)="saveScrollPosition()" (addToCart)="addToCart(product)"
+                            (removeFromCart)="removeFromCart(product)" ></app-singular-product>
     </div>
   </div>
 

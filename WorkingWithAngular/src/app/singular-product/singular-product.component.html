@@ -33,7 +33,7 @@
         <img src="/assets/add-item-in-cart-icon.svg" alt="cart-svg" />
       </button>
     </div>
-    <a [routerLink]="['/product', product.name]" class="product-name">
+    <a [routerLink]="['/product', product.name]" class="product-name" (click)="anchorClicked.emit()">
       <div class="product-info-card">
         <h3 style="margin: 0; font-weight: normal">{{ product.name }}</h3>
         <p>by {{ product.author }}</p>

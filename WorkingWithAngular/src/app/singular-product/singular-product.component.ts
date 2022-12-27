@@ -14,6 +14,7 @@ export class SingularProductComponent implements OnInit {
   @Input() onCart = false;
   @Output() addToCart = new EventEmitter();
   @Output() removeFromCart = new EventEmitter();
+  @Output() anchorClicked = new EventEmitter();
 
   ngOnInit(): void {
   }

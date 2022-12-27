@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { __values } from 'tslib';
 import { CartService } from '../cart.service';
 import { ProductsService, Product, Size } from '../products.service';
@@ -9,21 +9,23 @@ import { ProductsService, Product, Size } from '../products.service';
   styleUrls: ['./products-list.component.css']
 })
 export class ProductsListComponent implements OnInit, AfterContentInit, OnDestroy {
-  products: Product[] = [];
   columns: Product[][] = []
   resizeListener: any;
   scroolListener: any;
-  load = 0;
+  loadProductsTimer = 0;
   loadingBar: HTMLDivElement | undefined;
   loadingProducts = false;
+  scrollRestaurationTimer = 0;
 
   constructor(public cart: CartService, private storage: ProductsService, private renderer: Renderer2) {
   }
   //TODO - Add a price filter (for free).
   ngOnDestroy(): void {
     if (this.resizeListener) this.resizeListener();
-    if (this, this.scroolListener) this.scroolListener();
-    clearInterval(this.load);
+    if (this.scroolListener) this.scroolListener();
+
+    clearInterval(this.loadProductsTimer);
+    clearInterval(this.scrollRestaurationTimer);
   }
 
   ngAfterContentInit(): void {
@@ -52,18 +54,18 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
   }
 
   ngOnInit(): void {
-    this.products = this.storage.products;
+    this.columns = this.storage.columns;
   }
 
   productsCheck() {
-    let percent = (this.products.length / this.storage.productLength) * 100;
+    let percent = (this.storage.products.length / this.storage.productLength) * 100;
     if (this.loadingBar) this.loadingBar.style.width = `${percent}%`;
 
-    if (this.products.length >= this.storage.productLength) {
-      clearInterval(this.load);
+    if (this.storage.products.length >= this.storage.productLength) {
+      clearInterval(this.loadProductsTimer);
 
       this.resizeListener = this.renderer.listen('window', 'resize', () => {
-        this.FlexColumn()
+        this.SetUpProducts();
       });
 
       this.scroolListener = this.renderer.listen('window', 'scroll', () => {
@@ -72,74 +74,90 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
 
       const loadingGif = document.getElementById('loading_gif') as HTMLElement;
       if (loadingGif) loadingGif.style.display = 'none';
+
       if (this.loadingBar) if (this.loadingBar.parentElement) this.loadingBar.parentElement.style.display = `none`;
 
       (document.getElementById('product_selector') as HTMLSelectElement).disabled = false;
 
-      this.load = 0;
-      this.filter();
+      this.loadProductsTimer = 0;
+      this.SetUpProducts();
+
+      this.restoreScrollPosition();
     }
     else {
-      if (this.load == 0) {
-        this.load = window.setInterval(() => { this.productsCheck() }, 100);
+      if (this.loadProductsTimer == 0) {
+        this.loadProductsTimer = window.setInterval(() => { this.productsCheck() }, 100);
       }
     }
   }
 
-  FlexColumn() {
+  SetUpProducts() {
+    let size = parseInt((document.getElementById('product_selector') as HTMLInputElement).value);
+
+    if (Number(sessionStorage.getItem('filter')) !== size) {
+      this.FilterProducts();
+    }
+    else {
+      if (this.storage.columns.length === 0) {
+        this.SetUpColumns(this.storage.products);
+      }
+    }
+  }
+
+  FilterProducts() {
+    let size = parseInt((document.getElementById('product_selector') as HTMLInputElement).value);
+
+    if (size !== Size.default) {
+      const filteredProducts: Product[] = [];
+
+      for (let i = 0; i < this.storage.products.length; i++) {
+        if (this.storage.products[i].size === size) {
+          filteredProducts.push(this.storage.products[i]);
+        }
+      }
+
+      this.SetUpColumns(filteredProducts);
+    }
+    else {
+      this.SetUpColumns(this.storage.products);
+    }
+
+    if (typeof (Storage) !== "undefined") {
+      sessionStorage.setItem('filter', size.toString());
+    }
+  }
+
+  SetUpColumns(productsSource: Product[]) {
     const container = document.getElementById("products_flex") as HTMLDivElement;
     let columnsAmount = Math.round(container.offsetWidth / 500);
-    let productPerColumn = Math.floor(this.products.length / columnsAmount);
+    let productPerColumn = Math.floor(productsSource.length / columnsAmount);
     let index = 0;
 
-    this.columns.forEach(value => {
+    this.storage.columns.forEach(value => {
       value.splice(0, value.length);
     });
-    this.columns.splice(0, this.columns.length);
+    this.storage.columns.splice(0, this.storage.columns.length);
 
     for (let i = 0; i < columnsAmount; i++) {
       const products: Product[] = [];
 
       for (let j = 0; j < productPerColumn; j++) {
-        if (this.products[index] != undefined) {
-          products.push(this.products[index++]);
+        if (productsSource[index] != undefined) {
+          products.push(productsSource[index++]);
         }
       }
 
-      this.columns.push(products);
-    }
-  }
-
-  filter() {
-    let size = document.getElementById('product_selector') as HTMLSelectElement;
-
-    if (parseInt(size.value) !== Size.default) {
-      const filteredProducts: Product[] = [];
-
-      for (let i = 0; i < this.storage.products.length; i++) {
-        if (this.storage.products[i].size === parseInt(size.value)) {
-          filteredProducts.push(this.storage.products[i]);
-        }
-      }
-
-      this.products = filteredProducts;
-      this.FlexColumn();
-    }
-    else {
-      this.products = this.storage.products;
-      this.FlexColumn();
+      this.storage.columns.push(products);
     }
 
-    if (typeof (Storage) !== "undefined") {
-      sessionStorage.setItem('filter', size.value);
-    }
+    this.columns = this.storage.columns;
   }
 
   expandProducts() {
+    if (this.loadingProducts) return;
     let size = document.getElementById('product_selector') as HTMLSelectElement;
     const container = document.getElementById("products_flex") as HTMLDivElement;
-    let expandAmount = 5 * this.columns.length;
-    if (this.loadingProducts) return;
+    let expandAmount = 5 * this.storage.columns.length;
 
     if (window.scrollY > (container.offsetHeight * (65 / 100))) {
       this.loadingProducts = true;
@@ -149,19 +167,43 @@ export class ProductsListComponent implements OnInit, AfterContentInit, OnDestro
       let timer = window.setInterval(() => {
         if (productArr.length === expandAmount) {
           let index = 0;
-          for (let i = 0; i < productArr.length; i++) {
-            this.columns[index++].push(productArr[i]);
 
-            if (index === this.columns.length) index = 0;
+          for (let i = 0; i < productArr.length; i++) {
+            this.storage.columns[index++].push(productArr[i]);
+
+            if (index === this.storage.columns.length) index = 0;
           }
 
           this.storage.products = this.storage.products.concat(productArr)
-          this.products = this.storage.products;
 
           window.clearInterval(timer);
           this.loadingProducts = false;
           }
         }, 100);
+    }
+  }
+
+  saveScrollPosition() {
+    if (typeof (Storage) !== "undefined") {
+      sessionStorage.setItem('scrollPosition', `${window.scrollY}`);
+    }
+  }
+
+  restoreScrollPosition() {
+    if (typeof (Storage) !== "undefined") {
+      let scrollY = Number(sessionStorage.getItem('scrollPosition'));
+
+      if (scrollY) {
+        this.scrollRestaurationTimer = window.setInterval(() => {
+          if (window.scrollY !== scrollY) {
+            scroll(0, scrollY);
+          }
+          else {
+            window.clearInterval(this.scrollRestaurationTimer);
+          }
+        }, 50)
+        sessionStorage.setItem('scrollPosition', "0");
+      }
     }
   }
 

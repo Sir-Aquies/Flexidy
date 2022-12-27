@@ -33,6 +33,7 @@ export class ProductsService {
   recently = new BehaviorSubject<Product[]>(this.ProductArray(25));
   related = new BehaviorSubject<Product[]>(this.ProductArray(2));
   sizes: number[][] = [[700, 500], [700, 700], [700, 950]];
+  columns: Product[][] = [];
 
   constructor(private http: HttpClient) {
   }
